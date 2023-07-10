@@ -30,7 +30,7 @@
 </p>
 <hr class="border-zinc-800 md:max-w-full mt-6" />
 <article
-	class="prose md:prose-lg prose-zinc dark:prose-invert m-auto lg:max-w-3xl md:max-w-lg mt-6"
+	class="prose md:prose-lg prose-zinc dark:prose-invert text-justify m-auto lg:max-w-3xl md:max-w-lg mt-6"
 >
 	{@html data.content}
 </article>
