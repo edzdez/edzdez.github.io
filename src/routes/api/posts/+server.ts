@@ -12,6 +12,7 @@ export function GET(): Response {
 				filename: filename_trimmed,
 				...metadata.data.frontmatter
 			};
-		});
+		})
+		.reverse();
 	return new Response(JSON.stringify(fileNames));
 }
