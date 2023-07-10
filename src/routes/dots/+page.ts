@@ -8,7 +8,7 @@ export async function load() {
 		{
 			name: 'sway (+ waybar + swaylock)',
 			url: 'https://github.com/edzdez/sway',
-			image: 'sway.png'
+			image: 'thoughts-on-sway-blogpost.png'
 		},
 		{
 			name: 'bspwm (+ polybar)',

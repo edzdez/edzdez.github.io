@@ -13,6 +13,6 @@ export function GET(): Response {
 				...metadata.data.frontmatter
 			};
 		})
-		.reverse();
+		.sort((a, b) => b.id - a.id);
 	return new Response(JSON.stringify(fileNames));
 }

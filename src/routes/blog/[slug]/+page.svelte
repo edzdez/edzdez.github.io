@@ -28,9 +28,11 @@
 <p class="text-lg">
 	By: {data.metadata.author}, {data.metadata.date}
 </p>
-<hr class="border-zinc-800 md:max-w-full mt-2" />
+<hr class="border-zinc-800 md:max-w-full mt-6" />
 <article
 	class="prose md:prose-lg prose-zinc dark:prose-invert m-auto lg:max-w-3xl md:max-w-lg mt-6"
 >
 	{@html data.content}
 </article>
+
+<footer class="h-20" />

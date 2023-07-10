@@ -3,6 +3,7 @@ title: Hello, World!
 author: Ethan Zhang
 description: The first blog post!
 date: 07/09/2023
+id: 1
 ---
 
 Welcome to my blog!
