@@ -8,5 +8,5 @@
 	<h2 class="font-bold text-xl mb-2">
 		<MediaLink url={project.url}>{project.name}</MediaLink>
 	</h2>
-	<div>{project.description}</div>
+	<p>{project.description}</p>
 </div>

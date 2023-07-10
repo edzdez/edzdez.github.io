@@ -1,4 +1,9 @@
-# Hello, World!
+---
+title: Hello, World!
+author: Ethan Zhang
+description: The first blog post!
+date: 07/09/2023
+---
 
 Welcome to my blog!
 
@@ -13,8 +18,9 @@ auto main() -> int
 }
 ```
 
-And it can do math ($$\LaTeX$$):
+And it can do math ($\LaTeX$):
 
 $$
-\int_{0}^{\infty}{f\left(x\right)\mathrm{d}x}
+\lim_{x \to c}{f(x)} = L \iff \forall \epsilon > 0, \exists \delta > 0:
+0 < |x - c| < \delta \implies |f(x) - L| < \epsilon
 $$
