@@ -35,4 +35,3 @@
 	{@html data.content}
 </article>
 
-<footer class="h-20" />
