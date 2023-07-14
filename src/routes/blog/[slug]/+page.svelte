@@ -12,6 +12,7 @@
 		integrity="sha384-pRsDYiLLocCzWnUN/YEr9TBTTaZOUi5x8adKfqi6Qt44lDaFkoP++x1j2ohSMtdf"
 		crossorigin="anonymous"
 	/>
+    <title>{data.metadata.title}</title>
 </svelte:head>
 
 {#if browser}
@@ -30,7 +31,7 @@
 </p>
 <hr class="border-zinc-800 md:max-w-full mt-6" />
 <article
-	class="prose md:prose-lg prose-zinc dark:prose-invert text-justify m-auto lg:max-w-3xl md:max-w-lg mt-6"
+	class="prose md:prose-lg prose-zinc dark:prose-invert m-auto lg:max-w-4xl md:max-w-lg mt-6"
 >
 	{@html data.content}
 </article>

@@ -6,7 +6,7 @@
 <svelte:body class="bg-zinc-900 text-zinc-300" />
 
 <Nav />
-<div class="container lg:max-w-3xl md:max-w-lg w-3/4 m-auto">
+<div class="container lg:max-w-4xl md:max-w-lg w-3/4 m-auto">
 	<slot />
 </div>
 <footer class="h-20" />

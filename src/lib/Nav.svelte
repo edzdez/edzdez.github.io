@@ -14,7 +14,7 @@
 
 <nav class="flex items-center h-20">
 	<div
-		class="flex md:flex-row flex-col md:justify-between gap-y-4 container lg:max-w-3xl md:max-w-lg w-3/4 m-auto relative"
+		class="flex md:flex-row flex-col md:justify-between gap-y-4 container lg:max-w-4xl md:max-w-lg w-3/4 m-auto relative"
 	>
 		<a
 			class={`md:inline text-2xl font-bold md:mt-0 mt-8 md:text-left text-center hidden

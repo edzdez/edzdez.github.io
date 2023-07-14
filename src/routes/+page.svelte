@@ -43,7 +43,7 @@
 	/>
 </div>
 <hr class="border-zinc-600 md:max-w-full" />
-<section class="my-8 text-justify flex-col space-y-4 md:text-base text-sm">
+<section class="my-8 flex-col space-y-4 md:text-base text-sm">
 	<p>
 		Hi! I'm Ethan Zhang, a first-year math major at the University of Illinois
 		Urbana-Champaign. I'm interested in theoretical computer
