@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+		<link rel="manifest" href="../site.webmanifest">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+		<link href="../_app/immutable/assets/0.219f86df.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.bbea169a.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.63274e7e.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.d5313170.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.fbcc85e6.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.ac22e447.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.e38eb275.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/stores.7244a6e7.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/4.cba86018.js"><title>Thinkpad Z16 Fan Control with Thinkfan</title><!-- HEAD_svelte-1t80w2e_START --><link href="/prism.css" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.css" integrity="sha384-pRsDYiLLocCzWnUN/YEr9TBTTaZOUi5x8adKfqi6Qt44lDaFkoP++x1j2ohSMtdf" crossorigin="anonymous"><!-- HEAD_svelte-1t80w2e_END -->
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">   <nav class="flex items-center h-20"><div class="flex md:flex-row flex-col md:justify-between gap-y-4 container lg:max-w-4xl md:max-w-lg w-3/4 m-auto relative"><a class="md:inline text-2xl font-bold md:mt-0 mt-8 md:text-left text-center hidden
+			" href="/">Ethan Zhang</a> <div class="inline"><ul class="flex gap-x-8 md:absolute md:bottom-0 md:right-0"><li><a href="/" class="inline-block decoration-blue-400 decoration-2 underline-offset-4 text-center            before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible            hover:underline">Home</a></li> <li><a href="/blog" class="inline-block decoration-blue-400 decoration-2 underline-offset-4 text-center            before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible            font-bold underline">Blog</a></li> <li><a href="/projects" class="inline-block decoration-blue-400 decoration-2 underline-offset-4 text-center            before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible            hover:underline">Projects</a></li> <li><a href="/dots" class="inline-block decoration-blue-400 decoration-2 underline-offset-4 text-center            before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible            hover:underline">Dots</a></li></ul></div></div></nav> <div class="container lg:max-w-4xl md:max-w-lg w-3/4 m-auto">  <h1 class="text-5xl font-bold mt-8">Thinkpad Z16 Fan Control with Thinkfan</h1> <p class="text-lg">By: Ethan Zhang, 07/13/2023</p> <hr class="border-zinc-800 md:max-w-full mt-6"> <article class="prose md:prose-lg prose-zinc dark:prose-invert m-auto lg:max-w-4xl md:max-w-lg mt-6"><!-- HTML_TAG_START --><blockquote>
+<p><strong><em>NOTE:</em></strong> This is how I configured <code>thinkfan</code> for my Thinkpad Z16 Gen 1 on Fedora 38.
+I don't guarantee that this'll work for any other machine.</p>
+</blockquote>
+<h2>Setup</h2>
+<ol>
+<li>
+<p>Enable fan control.
+As root:</p>
+<div class="remark-highlight"><pre class="language-shell"><code class="language-shell">$ <span class="token builtin class-name">echo</span> <span class="token string">"options thinkpad_acpi fan_control=1"</span> <span class="token operator">></span> /etc/modprobe.d/thinkfan.conf
+$ modprobe thinkpad_acpi
+</code></pre></div>
+<p>And reboot.</p>
+</li>
+<li>
+<p>Build <a href="https://github.com/vmatare/thinkfan"><code>thinkfan</code></a> from source by following the instructions in <a href="https://github.com/vmatare/thinkfan/blob/master/README.md">the README</a>.
+At the time of writing:</p>
+<ol>
+<li>Install dependencies:
+<div class="remark-highlight"><pre class="language-shell"><code class="language-shell">$ <span class="token function">sudo</span> dnf <span class="token function">install</span> <span class="token parameter variable">-y</span> cmake g++ pkgconfig yaml-cpp-devel lm_sensors-devel
+</code></pre></div>
+</li>
+<li>Create a build folder:
+<div class="remark-highlight"><pre class="language-shell"><code class="language-shell">$ <span class="token function">mkdir</span> build <span class="token operator">&#x26;&#x26;</span> <span class="token builtin class-name">cd</span> build
+</code></pre></div>
+</li>
+<li>Configure the build directory (make sure <code>USE_LM_SENSORS</code> and <code>USE_YAML</code> are set to <code>ON</code>):
+<div class="remark-highlight"><pre class="language-shell"><code class="language-shell">$ ccmake <span class="token punctuation">..</span>
+</code></pre></div>
+</li>
+<li>Compile
+<div class="remark-highlight"><pre class="language-shell"><code class="language-shell">$ <span class="token function">make</span>
+</code></pre></div>
+</li>
+<li>And Install
+<div class="remark-highlight"><pre class="language-shell"><code class="language-shell">$ <span class="token function">sudo</span> <span class="token function">make</span> <span class="token function">install</span>
+</code></pre></div>
+</li>
+</ol>
+</li>
+<li>
+<p>Create the config:</p>
+<ol>
+<li>Run <code>sensors-detect</code> and <code>sensors</code> to find the correct name for the sensors.
+In my case, running <code>sensors</code> produced an output of:
+<div class="remark-highlight"><pre class="language-yaml"><code class="language-yaml">thinkpad<span class="token punctuation">-</span>isa<span class="token punctuation">-</span><span class="token number">0000</span>
+<span class="token key atrule">Adapter</span><span class="token punctuation">:</span> ISA adapter
+<span class="token key atrule">fan1</span><span class="token punctuation">:</span>        2364 RPM
+<span class="token key atrule">fan2</span><span class="token punctuation">:</span>        2219 RPM
+<span class="token key atrule">CPU</span><span class="token punctuation">:</span>          +44.0°C
+<span class="token key atrule">GPU</span><span class="token punctuation">:</span>              N/A
+<span class="token key atrule">temp3</span><span class="token punctuation">:</span>        +44.0°C
+<span class="token key atrule">temp4</span><span class="token punctuation">:</span>        +44.0°C
+<span class="token punctuation">...</span>
+</code></pre></div>
+</li>
+<li>Note the names of all sensors shown, as well as the ids.
+In this case, that would be <code>thinkpad-isa-0000</code> and <code>[ CPU, temp3, temp4, etc. ]</code>.</li>
+<li>Create <code>/etc/thinkfan.conf</code> and enter that info under <code>sensors:</code>
+(I'll show my full configuration further down).</li>
+<li>Add a section <code>fans:</code> and add <code>tpacpi: /proc/acpi/ibm/fan</code>.</li>
+<li>Add a section <code>levels:</code> and put in fan levels in the format <code>[ &#x3C;fan_level>, &#x3C;lower_limit_temp>, &#x3C;upper_limit_temp> ]</code>.
+For example, if I wanted to set fan <code>level 4</code> from 55°C to 64°C, you would write <code>[ 4, 55, 64 ]</code>.</li>
+</ol>
+<p>My full config looks like this:</p>
+<div class="remark-highlight"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">sensors</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">chip</span><span class="token punctuation">:</span> thinkpad<span class="token punctuation">-</span>isa<span class="token punctuation">-</span><span class="token number">0000</span>
+    <span class="token key atrule">ids</span><span class="token punctuation">:</span> <span class="token punctuation">[</span> CPU<span class="token punctuation">,</span> temp3<span class="token punctuation">,</span> temp5<span class="token punctuation">,</span> temp6<span class="token punctuation">,</span> temp7 <span class="token punctuation">]</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">chip</span><span class="token punctuation">:</span> amdgpu<span class="token punctuation">-</span>pci<span class="token punctuation">-</span><span class="token number">6400</span>
+    <span class="token key atrule">ids</span><span class="token punctuation">:</span> <span class="token punctuation">[</span> edge <span class="token punctuation">]</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">chip</span><span class="token punctuation">:</span> nvme<span class="token punctuation">-</span>pci<span class="token punctuation">-</span><span class="token number">0300</span>
+    <span class="token key atrule">ids</span><span class="token punctuation">:</span> <span class="token punctuation">[</span> Composite <span class="token punctuation">]</span>
+
+<span class="token key atrule">fans</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">tpacpi</span><span class="token punctuation">:</span> /proc/acpi/ibm/fan
+
+<span class="token comment"># levels from https://wiki.gentoo.org/wiki/Fan_speed_control/thinkfan</span>
+<span class="token key atrule">levels</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token punctuation">[</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span>  <span class="token number">41</span> <span class="token punctuation">]</span>
+  <span class="token punctuation">-</span> <span class="token punctuation">[</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">38</span><span class="token punctuation">,</span> <span class="token number">51</span> <span class="token punctuation">]</span>
+  <span class="token punctuation">-</span> <span class="token punctuation">[</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">45</span><span class="token punctuation">,</span> <span class="token number">56</span> <span class="token punctuation">]</span>
+  <span class="token punctuation">-</span> <span class="token punctuation">[</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">51</span><span class="token punctuation">,</span> <span class="token number">61</span> <span class="token punctuation">]</span>
+  <span class="token punctuation">-</span> <span class="token punctuation">[</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">55</span><span class="token punctuation">,</span> <span class="token number">64</span> <span class="token punctuation">]</span>
+  <span class="token punctuation">-</span> <span class="token punctuation">[</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">60</span><span class="token punctuation">,</span> <span class="token number">66</span> <span class="token punctuation">]</span>
+  <span class="token punctuation">-</span> <span class="token punctuation">[</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">63</span><span class="token punctuation">,</span> <span class="token number">68</span> <span class="token punctuation">]</span>
+  <span class="token punctuation">-</span> <span class="token punctuation">[</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">65</span><span class="token punctuation">,</span> <span class="token number">74</span> <span class="token punctuation">]</span>
+  <span class="token punctuation">-</span> <span class="token punctuation">[</span> <span class="token string">"level full-speed"</span><span class="token punctuation">,</span> <span class="token number">70</span><span class="token punctuation">,</span> <span class="token number">32767</span> <span class="token punctuation">]</span>
+</code></pre></div>
+</li>
+<li>
+<p>Run <code>thinkfan</code> to test your configuration.</p>
+</li>
+<li>
+<p>Enable the <code>systemd</code> service:</p>
+<div class="remark-highlight"><pre class="language-shell"><code class="language-shell">$ <span class="token function">sudo</span> systemctl <span class="token builtin class-name">enable</span> thinkfan
+</code></pre></div>
+</li>
+</ol>
+<h2>Why Did I Build From Source?</h2>
+<p>The version of <code>thinkfan</code> in the fedora repos seems to be built without <code>lm_sensors</code> support.
+As such, if you did <code>sudo dnf install thinkfan</code> and tried to run my configuration, you'd get this rather cryptic error message:</p>
+<div class="remark-highlight"><pre class="language-unknown"><code class="language-unknown">ERROR: /etc/thinkfan.yaml:2:
+  - chip: thinkpad-isa-0000
+    ^
+Invalid sensor entry.</code></pre></div>
+<p>(See <a href="https://github.com/vmatare/thinkfan/issues/229">this issue</a>, which is still applicable despite being about the AUR package).</p>
+<h2>Fan Speeds</h2>
+<p>Thinkpads' have eight fan speed levels (<a href="https://www.thinkwiki.org/wiki/How_to_control_fan_speed">https://www.thinkwiki.org/wiki/How_to_control_fan_speed</a>):</p>
+<ul>
+<li><code>level 0</code>: fans off</li>
+<li><code>level 1</code></li>
+<li><code>level 2</code>: low speed</li>
+<li><code>level 3</code></li>
+<li><code>level 4</code>: medium speed</li>
+<li><code>level 5</code></li>
+<li><code>level 6</code></li>
+<li><code>level 7</code>: high speed</li>
+</ul>
+<p>And three special levels (<a href="https://wiki.gentoo.org/wiki/Fan_speed_control/thinkfan">https://wiki.gentoo.org/wiki/Fan_speed_control/thinkfan</a>):</p>
+<ul>
+<li><code>level auto</code>: the default level where fan RPM is controlled by the BIOS</li>
+<li><code>level full-speed</code>: the maximum monitored speed</li>
+<li><code>level disengaged</code>: the true maximum speed where the embedded controller stops monitoring the fan speed</li>
+</ul>
+<h2>Manual Fan Speed Control</h2>
+<p>To control fan speed manually, just <code>echo</code> the intended level to <code>/proc/acpi/ibm/fan</code>.
+For example, to change the fan speed to <code>level 4</code>, run:</p>
+<div class="remark-highlight"><pre class="language-shell"><code class="language-shell"><span class="token builtin class-name">echo</span> <span class="token string">"level 4"</span> <span class="token operator">></span> /proc/acpi/ibm/fan
+</code></pre></div><!-- HTML_TAG_END --></article></div> <footer class="h-20"></footer> 
+			<script type="application/json" data-sveltekit-fetched data-url="/api/post/thinkpad-z16-fan-control">{"status":200,"statusText":"","headers":{},"body":"{\"metadata\":{\"title\":\"Thinkpad Z16 Fan Control with Thinkfan\",\"author\":\"Ethan Zhang\",\"description\":\"Setting up fan control for my Thinkpad Z16\",\"date\":\"07/13/2023\",\"id\":3},\"content\":\"\u003Cblockquote>\\n\u003Cp>\u003Cstrong>\u003Cem>NOTE:\u003C/em>\u003C/strong> This is how I configured \u003Ccode>thinkfan\u003C/code> for my Thinkpad Z16 Gen 1 on Fedora 38.\\nI don't guarantee that this'll work for any other machine.\u003C/p>\\n\u003C/blockquote>\\n\u003Ch2>Setup\u003C/h2>\\n\u003Col>\\n\u003Cli>\\n\u003Cp>Enable fan control.\\nAs root:\u003C/p>\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-shell\\\">\u003Ccode class=\\\"language-shell\\\">$ \u003Cspan class=\\\"token builtin class-name\\\">echo\u003C/span> \u003Cspan class=\\\"token string\\\">\\\"options thinkpad_acpi fan_control=1\\\"\u003C/span> \u003Cspan class=\\\"token operator\\\">>\u003C/span> /etc/modprobe.d/thinkfan.conf\\n$ modprobe thinkpad_acpi\\n\u003C/code>\u003C/pre>\u003C/div>\\n\u003Cp>And reboot.\u003C/p>\\n\u003C/li>\\n\u003Cli>\\n\u003Cp>Build \u003Ca href=\\\"https://github.com/vmatare/thinkfan\\\">\u003Ccode>thinkfan\u003C/code>\u003C/a> from source by following the instructions in \u003Ca href=\\\"https://github.com/vmatare/thinkfan/blob/master/README.md\\\">the README\u003C/a>.\\nAt the time of writing:\u003C/p>\\n\u003Col>\\n\u003Cli>Install dependencies:\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-shell\\\">\u003Ccode class=\\\"language-shell\\\">$ \u003Cspan class=\\\"token function\\\">sudo\u003C/span> dnf \u003Cspan class=\\\"token function\\\">install\u003C/span> \u003Cspan class=\\\"token parameter variable\\\">-y\u003C/span> cmake g++ pkgconfig yaml-cpp-devel lm_sensors-devel\\n\u003C/code>\u003C/pre>\u003C/div>\\n\u003C/li>\\n\u003Cli>Create a build folder:\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-shell\\\">\u003Ccode class=\\\"language-shell\\\">$ \u003Cspan class=\\\"token function\\\">mkdir\u003C/span> build \u003Cspan class=\\\"token operator\\\">&#x26;&#x26;\u003C/span> \u003Cspan class=\\\"token builtin class-name\\\">cd\u003C/span> build\\n\u003C/code>\u003C/pre>\u003C/div>\\n\u003C/li>\\n\u003Cli>Configure the build directory (make sure \u003Ccode>USE_LM_SENSORS\u003C/code> and \u003Ccode>USE_YAML\u003C/code> are set to \u003Ccode>ON\u003C/code>):\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-shell\\\">\u003Ccode class=\\\"language-shell\\\">$ ccmake \u003Cspan class=\\\"token punctuation\\\">..\u003C/span>\\n\u003C/code>\u003C/pre>\u003C/div>\\n\u003C/li>\\n\u003Cli>Compile\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-shell\\\">\u003Ccode class=\\\"language-shell\\\">$ \u003Cspan class=\\\"token function\\\">make\u003C/span>\\n\u003C/code>\u003C/pre>\u003C/div>\\n\u003C/li>\\n\u003Cli>And Install\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-shell\\\">\u003Ccode class=\\\"language-shell\\\">$ \u003Cspan class=\\\"token function\\\">sudo\u003C/span> \u003Cspan class=\\\"token function\\\">make\u003C/span> \u003Cspan class=\\\"token function\\\">install\u003C/span>\\n\u003C/code>\u003C/pre>\u003C/div>\\n\u003C/li>\\n\u003C/ol>\\n\u003C/li>\\n\u003Cli>\\n\u003Cp>Create the config:\u003C/p>\\n\u003Col>\\n\u003Cli>Run \u003Ccode>sensors-detect\u003C/code> and \u003Ccode>sensors\u003C/code> to find the correct name for the sensors.\\nIn my case, running \u003Ccode>sensors\u003C/code> produced an output of:\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-yaml\\\">\u003Ccode class=\\\"language-yaml\\\">thinkpad\u003Cspan class=\\\"token punctuation\\\">-\u003C/span>isa\u003Cspan class=\\\"token punctuation\\\">-\u003C/span>\u003Cspan class=\\\"token number\\\">0000\u003C/span>\\n\u003Cspan class=\\\"token key atrule\\\">Adapter\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span> ISA adapter\\n\u003Cspan class=\\\"token key atrule\\\">fan1\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span>        2364 RPM\\n\u003Cspan class=\\\"token key atrule\\\">fan2\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span>        2219 RPM\\n\u003Cspan class=\\\"token key atrule\\\">CPU\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span>          +44.0°C\\n\u003Cspan class=\\\"token key atrule\\\">GPU\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span>              N/A\\n\u003Cspan class=\\\"token key atrule\\\">temp3\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span>        +44.0°C\\n\u003Cspan class=\\\"token key atrule\\\">temp4\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span>        +44.0°C\\n\u003Cspan class=\\\"token punctuation\\\">...\u003C/span>\\n\u003C/code>\u003C/pre>\u003C/div>\\n\u003C/li>\\n\u003Cli>Note the names of all sensors shown, as well as the ids.\\nIn this case, that would be \u003Ccode>thinkpad-isa-0000\u003C/code> and \u003Ccode>[ CPU, temp3, temp4, etc. ]\u003C/code>.\u003C/li>\\n\u003Cli>Create \u003Ccode>/etc/thinkfan.conf\u003C/code> and enter that info under \u003Ccode>sensors:\u003C/code>\\n(I'll show my full configuration further down).\u003C/li>\\n\u003Cli>Add a section \u003Ccode>fans:\u003C/code> and add \u003Ccode>tpacpi: /proc/acpi/ibm/fan\u003C/code>.\u003C/li>\\n\u003Cli>Add a section \u003Ccode>levels:\u003C/code> and put in fan levels in the format \u003Ccode>[ &#x3C;fan_level>, &#x3C;lower_limit_temp>, &#x3C;upper_limit_temp> ]\u003C/code>.\\nFor example, if I wanted to set fan \u003Ccode>level 4\u003C/code> from 55°C to 64°C, you would write \u003Ccode>[ 4, 55, 64 ]\u003C/code>.\u003C/li>\\n\u003C/ol>\\n\u003Cp>My full config looks like this:\u003C/p>\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-yaml\\\">\u003Ccode class=\\\"language-yaml\\\">\u003Cspan class=\\\"token key atrule\\\">sensors\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span>\\n  \u003Cspan class=\\\"token punctuation\\\">-\u003C/span> \u003Cspan class=\\\"token key atrule\\\">chip\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span> thinkpad\u003Cspan class=\\\"token punctuation\\\">-\u003C/span>isa\u003Cspan class=\\\"token punctuation\\\">-\u003C/span>\u003Cspan class=\\\"token number\\\">0000\u003C/span>\\n    \u003Cspan class=\\\"token key atrule\\\">ids\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span> CPU\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> temp3\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> temp5\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> temp6\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> temp7 \u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\\n  \u003Cspan class=\\\"token punctuation\\\">-\u003C/span> \u003Cspan class=\\\"token key atrule\\\">chip\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span> amdgpu\u003Cspan class=\\\"token punctuation\\\">-\u003C/span>pci\u003Cspan class=\\\"token punctuation\\\">-\u003C/span>\u003Cspan class=\\\"token number\\\">6400\u003C/span>\\n    \u003Cspan class=\\\"token key atrule\\\">ids\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span> edge \u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\\n  \u003Cspan class=\\\"token punctuation\\\">-\u003C/span> \u003Cspan class=\\\"token key atrule\\\">chip\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span> nvme\u003Cspan class=\\\"token punctuation\\\">-\u003C/span>pci\u003Cspan class=\\\"token punctuation\\\">-\u003C/span>\u003Cspan class=\\\"token number\\\">0300\u003C/span>\\n    \u003Cspan class=\\\"token key atrule\\\">ids\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span> Composite \u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\\n\\n\u003Cspan class=\\\"token key atrule\\\">fans\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span>\\n  \u003Cspan class=\\\"token punctuation\\\">-\u003C/span> \u003Cspan class=\\\"token key atrule\\\">tpacpi\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span> /proc/acpi/ibm/fan\\n\\n\u003Cspan class=\\\"token comment\\\"># levels from https://wiki.gentoo.org/wiki/Fan_speed_control/thinkfan\u003C/span>\\n\u003Cspan class=\\\"token key atrule\\\">levels\u003C/span>\u003Cspan class=\\\"token punctuation\\\">:\u003C/span>\\n  \u003Cspan class=\\\"token punctuation\\\">-\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span> \u003Cspan class=\\\"token number\\\">0\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">0\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>  \u003Cspan class=\\\"token number\\\">41\u003C/span> \u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\\n  \u003Cspan class=\\\"token punctuation\\\">-\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span> \u003Cspan class=\\\"token number\\\">1\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">38\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">51\u003C/span> \u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\\n  \u003Cspan class=\\\"token punctuation\\\">-\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span> \u003Cspan class=\\\"token number\\\">2\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">45\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">56\u003C/span> \u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\\n  \u003Cspan class=\\\"token punctuation\\\">-\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span> \u003Cspan class=\\\"token number\\\">3\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">51\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">61\u003C/span> \u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\\n  \u003Cspan class=\\\"token punctuation\\\">-\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span> \u003Cspan class=\\\"token number\\\">4\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">55\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">64\u003C/span> \u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\\n  \u003Cspan class=\\\"token punctuation\\\">-\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span> \u003Cspan class=\\\"token number\\\">5\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">60\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">66\u003C/span> \u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\\n  \u003Cspan class=\\\"token punctuation\\\">-\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span> \u003Cspan class=\\\"token number\\\">6\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">63\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">68\u003C/span> \u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\\n  \u003Cspan class=\\\"token punctuation\\\">-\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span> \u003Cspan class=\\\"token number\\\">7\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">65\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">74\u003C/span> \u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\\n  \u003Cspan class=\\\"token punctuation\\\">-\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span> \u003Cspan class=\\\"token string\\\">\\\"level full-speed\\\"\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">70\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> \u003Cspan class=\\\"token number\\\">32767\u003C/span> \u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\\n\u003C/code>\u003C/pre>\u003C/div>\\n\u003C/li>\\n\u003Cli>\\n\u003Cp>Run \u003Ccode>thinkfan\u003C/code> to test your configuration.\u003C/p>\\n\u003C/li>\\n\u003Cli>\\n\u003Cp>Enable the \u003Ccode>systemd\u003C/code> service:\u003C/p>\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-shell\\\">\u003Ccode class=\\\"language-shell\\\">$ \u003Cspan class=\\\"token function\\\">sudo\u003C/span> systemctl \u003Cspan class=\\\"token builtin class-name\\\">enable\u003C/span> thinkfan\\n\u003C/code>\u003C/pre>\u003C/div>\\n\u003C/li>\\n\u003C/ol>\\n\u003Ch2>Why Did I Build From Source?\u003C/h2>\\n\u003Cp>The version of \u003Ccode>thinkfan\u003C/code> in the fedora repos seems to be built without \u003Ccode>lm_sensors\u003C/code> support.\\nAs such, if you did \u003Ccode>sudo dnf install thinkfan\u003C/code> and tried to run my configuration, you'd get this rather cryptic error message:\u003C/p>\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-unknown\\\">\u003Ccode class=\\\"language-unknown\\\">ERROR: /etc/thinkfan.yaml:2:\\n  - chip: thinkpad-isa-0000\\n    ^\\nInvalid sensor entry.\u003C/code>\u003C/pre>\u003C/div>\\n\u003Cp>(See \u003Ca href=\\\"https://github.com/vmatare/thinkfan/issues/229\\\">this issue\u003C/a>, which is still applicable despite being about the AUR package).\u003C/p>\\n\u003Ch2>Fan Speeds\u003C/h2>\\n\u003Cp>Thinkpads' have eight fan speed levels (\u003Ca href=\\\"https://www.thinkwiki.org/wiki/How_to_control_fan_speed\\\">https://www.thinkwiki.org/wiki/How_to_control_fan_speed\u003C/a>):\u003C/p>\\n\u003Cul>\\n\u003Cli>\u003Ccode>level 0\u003C/code>: fans off\u003C/li>\\n\u003Cli>\u003Ccode>level 1\u003C/code>\u003C/li>\\n\u003Cli>\u003Ccode>level 2\u003C/code>: low speed\u003C/li>\\n\u003Cli>\u003Ccode>level 3\u003C/code>\u003C/li>\\n\u003Cli>\u003Ccode>level 4\u003C/code>: medium speed\u003C/li>\\n\u003Cli>\u003Ccode>level 5\u003C/code>\u003C/li>\\n\u003Cli>\u003Ccode>level 6\u003C/code>\u003C/li>\\n\u003Cli>\u003Ccode>level 7\u003C/code>: high speed\u003C/li>\\n\u003C/ul>\\n\u003Cp>And three special levels (\u003Ca href=\\\"https://wiki.gentoo.org/wiki/Fan_speed_control/thinkfan\\\">https://wiki.gentoo.org/wiki/Fan_speed_control/thinkfan\u003C/a>):\u003C/p>\\n\u003Cul>\\n\u003Cli>\u003Ccode>level auto\u003C/code>: the default level where fan RPM is controlled by the BIOS\u003C/li>\\n\u003Cli>\u003Ccode>level full-speed\u003C/code>: the maximum monitored speed\u003C/li>\\n\u003Cli>\u003Ccode>level disengaged\u003C/code>: the true maximum speed where the embedded controller stops monitoring the fan speed\u003C/li>\\n\u003C/ul>\\n\u003Ch2>Manual Fan Speed Control\u003C/h2>\\n\u003Cp>To control fan speed manually, just \u003Ccode>echo\u003C/code> the intended level to \u003Ccode>/proc/acpi/ibm/fan\u003C/code>.\\nFor example, to change the fan speed to \u003Ccode>level 4\u003C/code>, run:\u003C/p>\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-shell\\\">\u003Ccode class=\\\"language-shell\\\">\u003Cspan class=\\\"token builtin class-name\\\">echo\u003C/span> \u003Cspan class=\\\"token string\\\">\\\"level 4\\\"\u003C/span> \u003Cspan class=\\\"token operator\\\">>\u003C/span> /proc/acpi/ibm/fan\\n\u003C/code>\u003C/pre>\u003C/div>\"}"}</script>
+			<script>
+				{
+					__sveltekit_ow022d = {
+						base: new URL("..", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("../_app/immutable/entry/start.bbea169a.js"),
+						import("../_app/immutable/entry/app.fbcc85e6.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 4],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
