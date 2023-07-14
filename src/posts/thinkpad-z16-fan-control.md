@@ -20,23 +20,23 @@ id: 3
    And reboot.
 2. Build [`thinkfan`](https://github.com/vmatare/thinkfan) from source by following the instructions in [the README](https://github.com/vmatare/thinkfan/blob/master/README.md).
    At the time of writing:
-    1. Installing dependencies:
+    1. Install dependencies:
        ```shell
        $ sudo dnf install -y cmake g++ pkgconfig yaml-cpp-devel lm_sensors-devel
        ```
-    2. Creating a build folder:
+    2. Create a build folder:
        ```shell
        $ mkdir build && cd build
        ```
-    3. Configuring the build directory (make sure `USE_LM_SENSORS` and `USE_YAML` are set to `ON`):
+    3. Configure the build directory (make sure `USE_LM_SENSORS` and `USE_YAML` are set to `ON`):
        ```shell
        $ ccmake ..
        ```
-    4. Compiling
+    4. Compile
        ```shell
        $ make
        ```
-    5. And Installing
+    5. And Install
        ```shell
        $ sudo make install
        ```
