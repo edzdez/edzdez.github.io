@@ -18,9 +18,8 @@ id: 3
    $ modprobe thinkpad_acpi
    ```
    And reboot.
-2. Build [`thinkfan`](https://github.com/vmatare/thinkfan) from source
-   Follow the instructions detailed in [the README](https://github.com/vmatare/thinkfan/blob/master/README.md).
-   At the time of writing that involves:
+2. Build [`thinkfan`](https://github.com/vmatare/thinkfan) from source by following the instructions in [the README](https://github.com/vmatare/thinkfan/blob/master/README.md).
+   At the time of writing:
     1. Installing dependencies:
        ```shell
        $ sudo dnf install -y cmake g++ pkgconfig yaml-cpp-devel lm_sensors-devel
