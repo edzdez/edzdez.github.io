@@ -12,13 +12,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		
 		<link href="../_app/immutable/assets/0.219f86df.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/entry/start.35cf91c8.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.04290d85.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.63274e7e.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.00a8bd56.js">
-		<link rel="modulepreload" href="../_app/immutable/entry/app.6be8b81c.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.bc028822.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.78054fd3.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index.ac22e447.js">
-		<link rel="modulepreload" href="../_app/immutable/nodes/0.b5eac932.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/stores.e39a8c83.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.a73e00be.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/stores.f95db91c.js">
 		<link rel="modulepreload" href="../_app/immutable/nodes/4.cba86018.js"><title>Thoughts on Sway</title><!-- HEAD_svelte-1t80w2e_START --><link href="/prism.css" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.css" integrity="sha384-pRsDYiLLocCzWnUN/YEr9TBTTaZOUi5x8adKfqi6Qt44lDaFkoP++x1j2ohSMtdf" crossorigin="anonymous"><!-- HEAD_svelte-1t80w2e_END -->
 	</head>
 	<body data-sveltekit-preload-data="hover">
@@ -70,7 +70,7 @@ they'll all be ironed out soon enough.</p><!-- HTML_TAG_END --></article></div> 
 			<script type="application/json" data-sveltekit-fetched data-url="/api/post/thoughts-on-sway">{"status":200,"statusText":"","headers":{},"body":"{\"metadata\":{\"title\":\"Thoughts on Sway\",\"author\":\"Ethan Zhang\",\"description\":\"Some thoughts on the Sway window manager\",\"date\":\"07/09/2023\",\"id\":2},\"content\":\"\u003Cp>\u003Cimg src=\\\"/thoughts-on-sway-blogpost.png\\\" alt=\\\"swaywm\\\">\u003C/p>\\n\u003Cp>I got my first introduction to tiling window managers with \u003Ccode>sway\u003C/code> in the summer of 2021.\\nAfter around a month, however, I decided that \u003Ccode>Wayland\u003C/code> wasn't quite ready for my use, and I ultimately switched to \u003Ccode>i3\u003C/code>\\non \u003Ccode>X11\u003C/code>.\\nAlthough I like the auto-tiling windows and keyboard-driven workflow, I \u003Cem>really\u003C/em> didn't want to be having any\\nissues with screen-sharing, audio, or Electron/Chromium-based apps right at the height of the pandemic.\\nPlus, it would only start on my laptop, as my desktop's Nvidia card wasn't supported (Nvidia had their own way of\\nimplementing \u003Ccode>Wayland\u003C/code> support which was different from how literally every other vendor did it).\u003C/p>\\n\u003Cp>Over the next two years, I hopped back and forth between different a couple of different window\\nmanagers: first \u003Ccode>dwm\u003C/code>, which I left due to issues from it not being \u003Ccode>ewmh\u003C/code> compliant (e.g. fullscreen\\nwindows and some other things I can't quite recall); then \u003Ccode>xmonad\u003C/code>, which, although I still like, can sometimes be a\\nbit tough to configure (\u003Cem>especially\u003C/em> \u003Ccode>xmobar\u003C/code>, which I could never quite figure out); \u003Ccode>qtile\u003C/code>, which eased up all my\\nconfigurations woes with the caveat of draining my laptop's battery; and \u003Ccode>bspwm\u003C/code>, which I honestly don't have many\\ncomplaints about (every tiling window manager should have something like \u003Ccode>bspc\u003C/code>).\u003C/p>\\n\u003Cp>But after quite a few mishaps with output configuration at school, I decided about a week and a half ago (June 30th) to\\ngive \u003Ccode>sway\u003C/code> and \u003Ccode>Wayland\u003C/code> another try.\u003C/p>\\n\u003Ch2>The Good\u003C/h2>\\n\u003Cul>\\n\u003Cli>Outputs work flawlessly (monitors with different resolutions or refresh rates, fractional scaling, hot-plugging,\\netc.)--no need to fiddle with \u003Ccode>xrandr\u003C/code> anymore!\u003C/li>\\n\u003Cli>No screen-tearing!\u003C/li>\\n\u003Cli>Configuring my mouse and keyboard was super easy--I don't need to search for \u003Ccode>/etc/X11/xorg.conf.d/40-libinput.conf\u003C/code>\\nor whichever file it was again!\u003C/li>\\n\u003Cli>Screen-sharing now works in most apps.\u003C/li>\\n\u003Cli>Nvidia also now mostly works.\u003C/li>\\n\u003Cli>\u003Ccode>swaymsg\u003C/code> (and, by extension, \u003Ccode>sway-ipc\u003C/code>) is wonderful.\u003C/li>\\n\u003Cli>\u003Ccode>sway\u003C/code> is a lot more \\\"all-in-one\\\" than most other window managers (wallpapers, idle configuration, etc.)\u003C/li>\\n\u003Cli>\u003Ccode>Wayland\u003C/code> is \\\"more secure\\\" than \u003Ccode>X11\u003C/code>--although this is true, I don't know how important it actually is for my use\\ncase.\u003C/li>\\n\u003C/ul>\\n\u003Ch2>The Bad\u003C/h2>\\n\u003Cul>\\n\u003Cli>I still have issues with Electron/Chromium-based apps.\u003C/li>\\n\u003Cli>\u003Ccode>XWayland\u003C/code> is kinda jank, but too many pieces of software don't yet run natively on \u003Ccode>Wayland\u003C/code>.\u003C/li>\\n\u003Cli>\u003Ccode>Wine\u003C/code> is also still jank.\u003C/li>\\n\u003Cli>No global keybinds (goodbye push-to-talk).\u003C/li>\\n\u003Cli>\u003Ccode>sway\u003C/code> doesn't have too many cool compositing effects--there's transparency, but that's it.\u003C/li>\\n\u003C/ul>\\n\u003Ch2>Final Thoughts\u003C/h2>\\n\u003Cp>If I had to pick my \\\"top-three window managers,\\\" \u003Ccode>sway\u003C/code> would definitely be up there (along with \u003Ccode>xmonad\u003C/code> and \u003Ccode>bspwm\u003C/code>).\\nI'd recommend it to anyone new to tiling window managers, as it strikes a good balance between being\\nextensible and easily customizable.\\nAdditionally, although there are some hiccups, \u003Ccode>Wayland\u003C/code>'s been making a lot of progress recently, and I'm confident\\nthey'll all be ironed out soon enough.\u003C/p>\"}"}</script>
 			<script>
 				{
-					__sveltekit_tu0u5y = {
+					__sveltekit_xumfj0 = {
 						base: new URL("..", location).pathname.slice(0, -1),
 						env: {}
 					};
@@ -80,8 +80,8 @@ they'll all be ironed out soon enough.</p><!-- HTML_TAG_END --></article></div> 
 					const data = [null,null];
 
 					Promise.all([
-						import("../_app/immutable/entry/start.35cf91c8.js"),
-						import("../_app/immutable/entry/app.6be8b81c.js")
+						import("../_app/immutable/entry/start.04290d85.js"),
+						import("../_app/immutable/entry/app.78054fd3.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 4],
