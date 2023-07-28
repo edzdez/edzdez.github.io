@@ -16,12 +16,12 @@ I recently decided to give it a try by writing two small applications with it:
 ## What I liked
 
 - __Signals and slots:__ \
-  Creating and connecting signals/slots is very intuitive.
+  Creating and connecting signals/slots is very ergonomic.
   At least to me,
   ```cpp
   QObject::connect(sender, signal, receiver, slot); // Qt
   ```
-  is a lot simpler and easier to understand than
+  is a lot more intuitive
   ```cpp
   m_button.signal_clicked().connect(sigc::mem_fun(target, handler)); // gtkmm
   ```
