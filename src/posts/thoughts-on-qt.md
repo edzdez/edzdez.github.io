@@ -37,12 +37,12 @@ I recently decided to give it a try by writing two small applications with it:
 ## Things I'm not so sure about
 
 - __`QString`, `QList`, and all the other Qt-specific data structures:__ \
-  While they provide more features and are objectively better in some ways than the STL implementations,
+  While they provide more features and are objectively better in some ways than the STL implementations (with features like implicit sharing/COW),
   I find it quite annoying to have to constantly convert back and forth between them (e.g. when using other non-Qt libraries).
   This fact also means that you're kinda locked into using Qt for everything.
 - __The `QObject` parent/child relationship:__ \
   It seems like the convention in Qt is to construct `QObject`s on the free store using `new` and pass in a raw pointer to a parent object, which would then handle deallocation for you.
-  While this dynamic is rather convenient, it goes against everything I've learned about C++ memory management.
+  While this dynamic is rather convenient, not having a matching `delete` for every `new` still makes me a bit uncomfortable.
 
 ## Final thoughts
 
