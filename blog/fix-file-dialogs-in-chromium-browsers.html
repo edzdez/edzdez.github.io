@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+		<link rel="manifest" href="../site.webmanifest">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+		<link href="../_app/immutable/assets/0.219f86df.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.b2dea091.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.63274e7e.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.941fc732.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.db141d34.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.ac22e447.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.6f2cb09e.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/stores.6885aa4c.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/4.cba86018.js"><title>Fixing File Dialogs on Chromium Browsers in Wayland</title><!-- HEAD_svelte-1t80w2e_START --><link href="/prism.css" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.css" integrity="sha384-pRsDYiLLocCzWnUN/YEr9TBTTaZOUi5x8adKfqi6Qt44lDaFkoP++x1j2ohSMtdf" crossorigin="anonymous"><!-- HEAD_svelte-1t80w2e_END -->
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">   <nav class="flex items-center h-20"><div class="flex md:flex-row flex-col md:justify-between gap-y-4 container lg:max-w-4xl md:max-w-lg w-3/4 m-auto relative"><a class="md:inline text-2xl font-bold md:mt-0 mt-8 md:text-left text-center hidden
+			" href="/">Ethan Zhang</a> <div class="inline"><ul class="flex gap-x-8 md:absolute md:bottom-0 md:right-0"><li><a href="/" class="inline-block decoration-blue-400 decoration-2 underline-offset-4 text-center            before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible            hover:underline">Home</a></li> <li><a href="/blog" class="inline-block decoration-blue-400 decoration-2 underline-offset-4 text-center            before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible            font-bold underline">Blog</a></li> <li><a href="/projects" class="inline-block decoration-blue-400 decoration-2 underline-offset-4 text-center            before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible            hover:underline">Projects</a></li> <li><a href="/dots" class="inline-block decoration-blue-400 decoration-2 underline-offset-4 text-center            before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible            hover:underline">Dots</a></li></ul></div></div></nav> <div class="container lg:max-w-4xl md:max-w-lg w-3/4 m-auto">  <h1 class="text-5xl font-bold mt-8">Fixing File Dialogs on Chromium Browsers in Wayland</h1> <p class="text-lg">By: Ethan Zhang, 10/24/23</p> <hr class="border-zinc-800 md:max-w-full mt-6"> <article class="prose md:prose-lg prose-zinc dark:prose-invert m-auto lg:max-w-4xl md:max-w-lg mt-6"><!-- HTML_TAG_START --><p>For a couple months now, I've noticed that I haven't been able to open the file-picker dialog in chromium based browsers (e.g. chromium, brave, etc.).</p>
+<p>Just today, however, I found a <a href="https://github.com/NixOS/nixpkgs/issues/262286">github issue</a> documenting the same behavior on NixOS and a sort-of hacky solution for it.
+After giving it a try on my Fedora machine, it seems to have done the trick.</p>
+<h2>The Method</h2>
+<ol>
+<li>Make sure that you have the <code>xdg-desktop-portal-gtk</code> package (or equivalent for your distro) package installed.</li>
+<li><code>cd</code> to the root directory <code>/</code> and search for a file called <code>gtk.portal</code>.
+To do this, I used the command <code>fd gtk.portal</code>, which found the file at <code>/usr/share/xdg-desktop-portal/portals/gtk.portal</code>.</li>
+<li>Open this file in your text-editor of choice:
+<ol>
+<li>Search for where it says <code>UseIn=gnome</code></li>
+<li>Change it to <code>UseIn=gnome;sway</code></li>
+</ol>
+</li>
+</ol><!-- HTML_TAG_END --></article></div> <footer class="h-20"></footer> 
+			<script type="application/json" data-sveltekit-fetched data-url="/api/post/fix-file-dialogs-in-chromium-browsers">{"status":200,"statusText":"","headers":{},"body":"{\"metadata\":{\"title\":\"Fixing File Dialogs on Chromium Browsers in Wayland\",\"author\":\"Ethan Zhang\",\"description\":\"Specifically for sway, but it might work for other WM/DEs too\",\"date\":\"10/24/23\",\"id\":5},\"content\":\"\u003Cp>For a couple months now, I've noticed that I haven't been able to open the file-picker dialog in chromium based browsers (e.g. chromium, brave, etc.).\u003C/p>\\n\u003Cp>Just today, however, I found a \u003Ca href=\\\"https://github.com/NixOS/nixpkgs/issues/262286\\\">github issue\u003C/a> documenting the same behavior on NixOS and a sort-of hacky solution for it.\\nAfter giving it a try on my Fedora machine, it seems to have done the trick.\u003C/p>\\n\u003Ch2>The Method\u003C/h2>\\n\u003Col>\\n\u003Cli>Make sure that you have the \u003Ccode>xdg-desktop-portal-gtk\u003C/code> package (or equivalent for your distro) package installed.\u003C/li>\\n\u003Cli>\u003Ccode>cd\u003C/code> to the root directory \u003Ccode>/\u003C/code> and search for a file called \u003Ccode>gtk.portal\u003C/code>.\\nTo do this, I used the command \u003Ccode>fd gtk.portal\u003C/code>, which found the file at \u003Ccode>/usr/share/xdg-desktop-portal/portals/gtk.portal\u003C/code>.\u003C/li>\\n\u003Cli>Open this file in your text-editor of choice:\\n\u003Col>\\n\u003Cli>Search for where it says \u003Ccode>UseIn=gnome\u003C/code>\u003C/li>\\n\u003Cli>Change it to \u003Ccode>UseIn=gnome;sway\u003C/code>\u003C/li>\\n\u003C/ol>\\n\u003C/li>\\n\u003C/ol>\"}"}</script>
+			<script>
+				{
+					__sveltekit_17gepg0 = {
+						base: new URL("..", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("../_app/immutable/entry/start.b2dea091.js"),
+						import("../_app/immutable/entry/app.db141d34.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 4],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
