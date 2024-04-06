@@ -45,18 +45,10 @@
 <hr class="border-zinc-600 md:max-w-full" />
 <section class="my-8 flex-col space-y-4 md:text-base text-sm">
 	<p>
-		Hi! I'm Ethan Zhang, a first-year math major at the University of Illinois
-		Urbana-Champaign. I'm interested in theoretical computer
-		science—specifically program verification, formal models of computation, and
-		the design and analysis of algorithms—as well as pure math topics ranging
-		from analysis to topology to algebra.
-	</p>
-	<p>
-		On the applied side, I'm interested in Linux, programming languages, and
-		distributed systems. I'm most proficient (and program the most) in C++ and
-		Rust, but I also like to learn about different programming paradigms; a
-		dynamic which has led me to try out numerous languages, including OCaml,
-		Clojure, Elixir, and Haskell.
+        Hi!
+        I'm Ethan Zhang, a first-year math major at the University of Illinois Urbana-Champaign.
+        I'm interested in theoretical computer science and its applications to mathematics, with a particular emphasis on proof assistants, logic, and type theory.
+        On the applied side, I'm interested in Linux and the design of programming languages and other software tooling.
 	</p>
 </section>
 <hr class="border-zinc-600" />
