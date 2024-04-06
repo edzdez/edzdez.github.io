@@ -12,13 +12,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		
 		<link href="../_app/immutable/assets/0.219f86df.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/entry/start.d3373d8e.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.67ec7bcb.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.63274e7e.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.da6f0236.js">
-		<link rel="modulepreload" href="../_app/immutable/entry/app.a15d3c90.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.77b1bd3e.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.dc7eb87a.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index.ac22e447.js">
-		<link rel="modulepreload" href="../_app/immutable/nodes/0.ce2f464b.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/stores.da3c7c0f.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.fa29e13c.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/stores.666f91ec.js">
 		<link rel="modulepreload" href="../_app/immutable/nodes/4.cba86018.js"><title>Thoughts on Qt</title><!-- HEAD_svelte-1t80w2e_START --><link href="/prism.css" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.css" integrity="sha384-pRsDYiLLocCzWnUN/YEr9TBTTaZOUi5x8adKfqi6Qt44lDaFkoP++x1j2ohSMtdf" crossorigin="anonymous"><!-- HEAD_svelte-1t80w2e_END -->
 	</head>
 	<body data-sveltekit-preload-data="hover">
@@ -66,7 +66,7 @@ As such, I look forward to working with Qt in the future.</p><!-- HTML_TAG_END -
 			<script type="application/json" data-sveltekit-fetched data-url="/api/post/thoughts-on-qt">{"status":200,"statusText":"","headers":{},"body":"{\"metadata\":{\"title\":\"Thoughts on Qt\",\"author\":\"Ethan Zhang\",\"description\":\"Some thoughts on Qt\",\"date\":\"07/27/2023\",\"id\":4},\"content\":\"\u003Cp>Qt is a cross-platform, C++ library that provides many features, including a GUI toolkit, networking, XML/JSON serialization/deserialization, and more.\u003C/p>\\n\u003Cp>I recently decided to give it a try by writing two small applications with it:\u003C/p>\\n\u003Cul>\\n\u003Cli>\u003Ca href=\\\"https://github.com/edzdez/websocket-chat-test\\\">A real-time chat client using websockets\u003C/a> and\u003C/li>\\n\u003Cli>\u003Ca href=\\\"https://github.com/edzdez/spelling-bee-qt\\\">a client for freebee.fun, a clone of the NYT's Spelling Bee game\u003C/a>.\u003C/li>\\n\u003C/ul>\\n\u003Ch2>What I liked\u003C/h2>\\n\u003Cul>\\n\u003Cli>\u003Cstrong>Signals and slots:\u003C/strong> \u003Cbr>\\nCreating and connecting signals/slots is very ergonomic.\\nAt least to me,\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-cpp\\\">\u003Ccode class=\\\"language-cpp\\\">\u003Cspan class=\\\"token class-name\\\">QObject\u003C/span>\u003Cspan class=\\\"token double-colon punctuation\\\">::\u003C/span>\u003Cspan class=\\\"token function\\\">connect\u003C/span>\u003Cspan class=\\\"token punctuation\\\">(\u003C/span>sender\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> signal\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> receiver\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> slot\u003Cspan class=\\\"token punctuation\\\">)\u003C/span>\u003Cspan class=\\\"token punctuation\\\">;\u003C/span> \u003Cspan class=\\\"token comment\\\">// Qt\u003C/span>\\n\u003C/code>\u003C/pre>\u003C/div>\\nis a lot more intuitive\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-cpp\\\">\u003Ccode class=\\\"language-cpp\\\">m_button\u003Cspan class=\\\"token punctuation\\\">.\u003C/span>\u003Cspan class=\\\"token function\\\">signal_clicked\u003C/span>\u003Cspan class=\\\"token punctuation\\\">(\u003C/span>\u003Cspan class=\\\"token punctuation\\\">)\u003C/span>\u003Cspan class=\\\"token punctuation\\\">.\u003C/span>\u003Cspan class=\\\"token function\\\">connect\u003C/span>\u003Cspan class=\\\"token punctuation\\\">(\u003C/span>sigc\u003Cspan class=\\\"token double-colon punctuation\\\">::\u003C/span>\u003Cspan class=\\\"token function\\\">mem_fun\u003C/span>\u003Cspan class=\\\"token punctuation\\\">(\u003C/span>target\u003Cspan class=\\\"token punctuation\\\">,\u003C/span> handler\u003Cspan class=\\\"token punctuation\\\">)\u003C/span>\u003Cspan class=\\\"token punctuation\\\">)\u003C/span>\u003Cspan class=\\\"token punctuation\\\">;\u003C/span> \u003Cspan class=\\\"token comment\\\">// gtkmm\u003C/span>\\n\u003C/code>\u003C/pre>\u003C/div>\\n\u003C/li>\\n\u003Cli>\u003Cstrong>\u003Ccode>QtDesigner\u003C/code> (and all the other tooling around Qt):\u003C/strong> \u003Cbr>\\nI like how you can quickly throw together a UI in QtDesigner and have \u003Ccode>moc\u003C/code> automatically translate it into code you can work with.\\nIt also creates a nice separation between the program logic and the user interface.\\nI know that GTK's \u003Ccode>Glade\u003C/code> is similar, but I never seem to be able to get it to work correctly.\u003C/li>\\n\u003Cli>\u003Cstrong>Lots of features:\u003C/strong> \u003Cbr>\\nThere are a ton of modules that cover pretty much everything you need, including networking and database access.\u003C/li>\\n\u003Cli>\u003Cstrong>The docs are really good.\u003C/strong>\u003C/li>\\n\u003Cli>\u003Cstrong>It's actually cross-platform (compiles on Windows without shenanigans)\u003C/strong>\u003C/li>\\n\u003C/ul>\\n\u003Ch2>Things I'm not so sure about\u003C/h2>\\n\u003Cul>\\n\u003Cli>\u003Cstrong>\u003Ccode>QString\u003C/code>, \u003Ccode>QList\u003C/code>, and all the other Qt-specific data structures:\u003C/strong> \u003Cbr>\\nWhile they provide more features and are objectively better in some ways than the STL implementations (with features like implicit sharing/COW),\\nI find it quite annoying to have to constantly convert back and forth between them (e.g. when using other non-Qt libraries).\\nThis fact also means that you're kinda locked into using Qt for everything.\u003C/li>\\n\u003Cli>\u003Cstrong>The \u003Ccode>QObject\u003C/code> parent/child relationship:\u003C/strong> \u003Cbr>\\nIt seems like the convention in Qt is to construct \u003Ccode>QObject\u003C/code>s on the free store using \u003Ccode>new\u003C/code> and pass in a raw pointer to a parent object, which would then handle deallocation for you.\\nWhile this dynamic is rather convenient, not having a matching \u003Ccode>delete\u003C/code> for every \u003Ccode>new\u003C/code> still makes me a bit uncomfortable.\u003C/li>\\n\u003C/ul>\\n\u003Ch2>Final thoughts\u003C/h2>\\n\u003Cp>If I had to pick one word to describe Qt, it would be \\\"convenient.\\\"\\nEven with no prior experience, I was able to get up and running pretty quickly and wrote both apps in around a couple of hours each.\\nAs such, I look forward to working with Qt in the future.\u003C/p>\"}"}</script>
 			<script>
 				{
-					__sveltekit_1p7biz6 = {
+					__sveltekit_mgz6ac = {
 						base: new URL("..", location).pathname.slice(0, -1),
 						env: {}
 					};
@@ -76,8 +76,8 @@ As such, I look forward to working with Qt in the future.</p><!-- HTML_TAG_END -
 					const data = [null,null];
 
 					Promise.all([
-						import("../_app/immutable/entry/start.d3373d8e.js"),
-						import("../_app/immutable/entry/app.a15d3c90.js")
+						import("../_app/immutable/entry/start.67ec7bcb.js"),
+						import("../_app/immutable/entry/app.dc7eb87a.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 4],

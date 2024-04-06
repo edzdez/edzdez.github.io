@@ -12,13 +12,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		
 		<link href="../_app/immutable/assets/0.219f86df.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/entry/start.d3373d8e.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.67ec7bcb.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.63274e7e.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.da6f0236.js">
-		<link rel="modulepreload" href="../_app/immutable/entry/app.a15d3c90.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.77b1bd3e.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.dc7eb87a.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index.ac22e447.js">
-		<link rel="modulepreload" href="../_app/immutable/nodes/0.ce2f464b.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/stores.da3c7c0f.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.fa29e13c.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/stores.666f91ec.js">
 		<link rel="modulepreload" href="../_app/immutable/nodes/4.cba86018.js"><title>Fixing File Dialogs on Chromium Browsers in Wayland</title><!-- HEAD_svelte-1t80w2e_START --><link href="/prism.css" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.css" integrity="sha384-pRsDYiLLocCzWnUN/YEr9TBTTaZOUi5x8adKfqi6Qt44lDaFkoP++x1j2ohSMtdf" crossorigin="anonymous"><!-- HEAD_svelte-1t80w2e_END -->
 	</head>
 	<body data-sveltekit-preload-data="hover">
@@ -41,7 +41,7 @@ To do this, I used the command <code>fd gtk.portal</code>, which found the file 
 			<script type="application/json" data-sveltekit-fetched data-url="/api/post/fix-file-dialogs-in-chromium-browsers">{"status":200,"statusText":"","headers":{},"body":"{\"metadata\":{\"title\":\"Fixing File Dialogs on Chromium Browsers in Wayland\",\"author\":\"Ethan Zhang\",\"description\":\"Specifically for sway, but it might work for other WM/DEs too\",\"date\":\"10/24/2023\",\"id\":5},\"content\":\"\u003Cp>For a couple months now, I've noticed that I haven't been able to open the file-picker dialog in chromium based browsers (e.g. chromium, brave, etc.).\u003C/p>\\n\u003Cp>Just today, however, I found a \u003Ca href=\\\"https://github.com/NixOS/nixpkgs/issues/262286\\\">github issue\u003C/a> documenting the same behavior on NixOS and a sort-of hacky solution for it.\\nAfter giving it a try on my Fedora machine, it seems to have done the trick.\u003C/p>\\n\u003Ch2>The Method\u003C/h2>\\n\u003Col>\\n\u003Cli>Make sure that you have the \u003Ccode>xdg-desktop-portal-gtk\u003C/code> package (or equivalent for your distro) package installed.\u003C/li>\\n\u003Cli>\u003Ccode>cd\u003C/code> to the root directory \u003Ccode>/\u003C/code> and search for a file called \u003Ccode>gtk.portal\u003C/code>.\\nTo do this, I used the command \u003Ccode>fd gtk.portal\u003C/code>, which found the file at \u003Ccode>/usr/share/xdg-desktop-portal/portals/gtk.portal\u003C/code>.\u003C/li>\\n\u003Cli>Open this file in your text-editor of choice:\\n\u003Col>\\n\u003Cli>Search for where it says \u003Ccode>UseIn=gnome\u003C/code>\u003C/li>\\n\u003Cli>Change it to \u003Ccode>UseIn=gnome;sway\u003C/code>\u003C/li>\\n\u003C/ol>\\n\u003C/li>\\n\u003C/ol>\"}"}</script>
 			<script>
 				{
-					__sveltekit_1p7biz6 = {
+					__sveltekit_mgz6ac = {
 						base: new URL("..", location).pathname.slice(0, -1),
 						env: {}
 					};
@@ -51,8 +51,8 @@ To do this, I used the command <code>fd gtk.portal</code>, which found the file 
 					const data = [null,null];
 
 					Promise.all([
-						import("../_app/immutable/entry/start.d3373d8e.js"),
-						import("../_app/immutable/entry/app.a15d3c90.js")
+						import("../_app/immutable/entry/start.67ec7bcb.js"),
+						import("../_app/immutable/entry/app.dc7eb87a.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 4],
