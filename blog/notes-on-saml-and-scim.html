@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+		<link rel="manifest" href="../site.webmanifest">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+		<link href="../_app/immutable/assets/0.219f86df.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.5d14dd9c.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.63274e7e.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.c46e564e.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.481b2146.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.ac22e447.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.6c729a7f.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/stores.82ca3dec.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/4.cba86018.js"><title>Notes on SAML and SCIM</title><!-- HEAD_svelte-1t80w2e_START --><link href="/prism.css" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.css" integrity="sha384-pRsDYiLLocCzWnUN/YEr9TBTTaZOUi5x8adKfqi6Qt44lDaFkoP++x1j2ohSMtdf" crossorigin="anonymous"><!-- HEAD_svelte-1t80w2e_END -->
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">   <nav class="flex items-center h-20"><div class="flex md:flex-row flex-col md:justify-between gap-y-4 container lg:max-w-4xl md:max-w-lg w-3/4 m-auto relative"><a class="md:inline text-2xl font-bold md:mt-0 mt-8 md:text-left text-center hidden
+			" href="/">Ethan Zhang</a> <div class="inline"><ul class="flex gap-x-8 md:absolute md:bottom-0 md:right-0"><li><a href="/" class="inline-block decoration-blue-400 decoration-2 underline-offset-4 text-center            before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible            hover:underline">Home</a></li> <li><a href="/blog" class="inline-block decoration-blue-400 decoration-2 underline-offset-4 text-center            before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible            font-bold underline">Blog</a></li> <li><a href="/projects" class="inline-block decoration-blue-400 decoration-2 underline-offset-4 text-center            before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible            hover:underline">Projects</a></li> <li><a href="/dots" class="inline-block decoration-blue-400 decoration-2 underline-offset-4 text-center            before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible            hover:underline">Dots</a></li></ul></div></div></nav> <div class="container lg:max-w-4xl md:max-w-lg w-3/4 m-auto">  <h1 class="text-5xl font-bold mt-8">Notes on SAML and SCIM</h1> <p class="text-lg">By: Ethan Zhang, 06/11/2024</p> <hr class="border-zinc-800 md:max-w-full mt-6"> <article class="prose md:prose-lg prose-zinc dark:prose-invert m-auto lg:max-w-4xl md:max-w-lg mt-6"><!-- HTML_TAG_START --><h2>What is SAML?</h2>
+<p>The Security Assertion Markup Language (SAML) is an XML-based standard for communicating authentication information between multiple parties.
+Its most common use case is in providing federated identity and single sign-on (SSO) functionality,
+which allow for employees at Deere to login once with a single set of credentials and use that same identity across multiple external services.</p>
+<h2>The Standard</h2>
+<p>There are three participants in the SAML flow:</p>
+<ul>
+<li>the Identity Provider (IdP), e.g. Okta,</li>
+<li>the Subject, i.e. the user's browser, and</li>
+<li>the Service Provider (SP), e.g. Zuora, Rally, etc.</li>
+</ul>
+<p>The standard defines an XML schema for <em>assertions</em> from one party to another.
+An assertion is made up of some metadata (e.g. who is the subject)
+and a series of <em>statements</em>, which take on one of three forms:</p>
+<ul>
+<li>Authentication (how and when did the subject authenticate)</li>
+<li>Attribute (key-value pairs representing properties of the subject, such as email address, group membership, etc)</li>
+<li>Authorization Decision (<span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span></span></span></span></span> is authorized to do <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span></span></span></span></span> on <span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi></mrow><annotation encoding="application/x-tex">Z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span></span></span></span></span>)</li>
+</ul>
+<p>Additionally, the standard defines a format for metadata that describe configuration information for a service
+A service's metadata often includes information about the role of the service, the public key for verifying the assertion, and more.</p>
+<h2>The SSO Flow</h2>
+<p>These notes will focus on the redirect based flow, where the browser brokers the authentication.
+Of such flows, there are two types, depending on whether the SP or the IdP initiates the flow.</p>
+<h3>SP-Initiated</h3>
+<ol>
+<li>Subject requests a resource from the SP.</li>
+<li>SP checks if browser has as security context:
+If yes, skip to 7.
+Else, redirect with a <code>GET</code> to IdP with two query parameters:
+<ul>
+<li><code>SamlRequest</code>: Base64 encoded XML</li>
+<li><code>RelayState</code>: any state that needs to be kept track of, e.g. deep links</li>
+</ul>
+</li>
+<li>IdP checks if browser has a security context.
+If not, prompt user for credentials.</li>
+<li>IdP generates a SAML assertion and puts it in an xhtml document as a hidden form.
+Sign the assertion with private key and redirect with a <code>POST</code> to SP.
+Echo the <code>RelayState</code> back to the SP.</li>
+<li>SP verifies the authenticity of the assertion with IdP's public key.
+If valid, SP generates a security context and forwards it to the subject.</li>
+<li>Subject requests the resource again.</li>
+<li>SP checks security context to see if user is authorized to access resource.
+If yes, responds with the resource.</li>
+</ol>
+<p>It is important to note that this process is stateless, hence the <code>RelayState</code> query parameter must be used to keep track of information we want to persist.</p>
+<h3>IdP-Initiated</h3>
+<ol>
+<li>IdP prompts users for credentials.</li>
+<li>User selects service from IdP portal.</li>
+<li>IdP generates a SAML assertion and puts it in an xhtml document as a hidden form.
+Sign the assertion with private key and redirect with a <code>POST</code> to SP.</li>
+<li>SP verifies the authenticity of the assertion with IdP's public key.
+If valid, SP generates a security context and forwards it to the subject.</li>
+<li>SP checks security context to see if user is authorized to access resource.
+If yes, responds with the resource.</li>
+</ol>
+<h2>What is SCIM?</h2>
+<p>The System for Cross-domain Identity Management (SCIM) is an open standard for provisioning users and groups across applications.</p>
+<p>For example, suppose that we want to provide access to an application for all members of a particular AD group and automatically assign each user to different permission groups based on their position in the company.
+Now, say that someone has left the team and we want to revoke access to their account.</p>
+<p>All these identity management tasks are effortless in services that support the SCIM standard.</p>
+<h2>The Standard</h2>
+<p>The SCIM standard defines two things:</p>
+<ul>
+<li>a JSON schema for representing users and groups, and</li>
+<li>a RESTful API to perform CRUD (Create, Read, Update, and Delete) operations on users and groups.</li>
+</ul>
+<h2>Example User Lifecycle</h2>
+<p>Suppose that John joins your company as a software engineer in the sales department.
+Your company uses Microsoft Active Directory (AD) as a centralized user store integrated with Okta, which you use for identity management.</p>
+<p>An example flow for how Okta may provision John's user in your favorite SaaS might be (disclaimer: I don't actually know exactly what Okta does, but this is my best guess from reading the docs):</p>
+<ol>
+<li>John's account is created in AD and assigned to the <code>Sales</code> and <code>Developer</code> AD groups.</li>
+<li>John's account information is synced to Okta, which uses the <code>Sales</code> group to assign him to <code>SaaS.com</code> and pushes the <code>Developer</code> group to the application.</li>
+<li>Okta notices that John's account does not exist on <code>SaaS.com</code>, so it issues the following <code>POST</code> request to <code>https://SaaS.com/scim/v2/Users</code>:
+<div class="remark-highlight"><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"schemas"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"urn:ietf:params:scim:schemas:core:2.0:User"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"userName"</span><span class="token operator">:</span> <span class="token string">"DoeJohn@company.com"</span><span class="token punctuation">,</span>
+    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"givenName"</span><span class="token operator">:</span> <span class="token string">"John"</span><span class="token punctuation">,</span>
+        <span class="token property">"familyName"</span><span class="token operator">:</span> <span class="token string">"Doe"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"emails"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+        <span class="token property">"primary"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        <span class="token property">"value"</span><span class="token operator">:</span> <span class="token string">"DoeJohn@company.com"</span><span class="token punctuation">,</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"work"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"displayName"</span><span class="token operator">:</span> <span class="token string">"John Doe"</span><span class="token punctuation">,</span>
+    <span class="token property">"locale"</span><span class="token operator">:</span> <span class="token string">"en-US"</span><span class="token punctuation">,</span>
+    <span class="token property">"externalId"</span><span class="token operator">:</span> <span class="token string">"randomid123"</span><span class="token punctuation">,</span>
+    <span class="token property">"groups"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"Developer"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"password"</span><span class="token operator">:</span> <span class="token string">"password123"</span><span class="token punctuation">,</span>
+    <span class="token property">"active"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+</code></pre></div>
+to which <code>SaaS.com</code> responds with a <code>201 Created</code> and the newly created user.</li>
+<li>John gets promoted to a manager and gets added to the <code>Manager</code> AD group.</li>
+<li>Okta updates his user by sending a <code>PATCH</code> request to <code>https://SaaS.com/scim/v2/Users/$theusersuuid</code>:
+<div class="remark-highlight"><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"schemas"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"urn:ietf:params:scim:api:messages:2.0:PatchOp"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"Operations"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+        <span class="token property">"op"</span><span class="token operator">:</span> <span class="token string">"replace"</span><span class="token punctuation">,</span>
+        <span class="token property">"value"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"groups"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"Manager"</span><span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div>
+to which <code>SaaS.com</code> responds with a <code>200 OK</code> and the updated user.</li>
+<li>John now leaves the company.</li>
+<li>Okta deactivates his account and sends a <code>PATCH</code> request to <code>https://SaaS.com/scim/v2/Users/$theusersuuid</code> (note that Okta doesn't use the <code>DELETE</code> verb):
+<div class="remark-highlight"><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"schemas"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"urn:ietf:params:scim:api:messages:2.0:PatchOp"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"Operations"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+        <span class="token property">"op"</span><span class="token operator">:</span> <span class="token string">"replace"</span><span class="token punctuation">,</span>
+        <span class="token property">"value"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"active"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div>
+</li>
+</ol>
+<h2>Sources</h2>
+<h3>SAML</h3>
+<ul>
+<li><a href="https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0-cd-02.html">https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0-cd-02.html</a></li>
+<li><a href="https://developer.okta.com/docs/concepts/saml/">https://developer.okta.com/docs/concepts/saml/</a></li>
+<li><a href="https://www.samltool.com/generic_sso_res.php">https://www.samltool.com/generic_sso_res.php</a></li>
+</ul>
+<h3>SCIM</h3>
+<ul>
+<li><a href="https://scim.cloud/">https://scim.cloud/</a></li>
+<li><a href="https://developer.okta.com/docs/concepts/scim/">https://developer.okta.com/docs/concepts/scim/</a></li>
+<li><a href="https://developer.okta.com/docs/reference/scim/scim-20/">https://developer.okta.com/docs/reference/scim/scim-20/</a></li>
+</ul><!-- HTML_TAG_END --></article></div> <footer class="h-20"></footer> 
+			<script type="application/json" data-sveltekit-fetched data-url="/api/post/notes-on-saml-and-scim">{"status":200,"statusText":"","headers":{},"body":"{\"metadata\":{\"title\":\"Notes on SAML and SCIM\",\"author\":\"Ethan Zhang\",\"description\":\"Some notes on SAML2 and SCIM that I prepared for my manager during my internship at John Deere\",\"date\":\"06/11/2024\",\"id\":6},\"content\":\"\u003Ch2>What is SAML?\u003C/h2>\\n\u003Cp>The Security Assertion Markup Language (SAML) is an XML-based standard for communicating authentication information between multiple parties.\\nIts most common use case is in providing federated identity and single sign-on (SSO) functionality,\\nwhich allow for employees at Deere to login once with a single set of credentials and use that same identity across multiple external services.\u003C/p>\\n\u003Ch2>The Standard\u003C/h2>\\n\u003Cp>There are three participants in the SAML flow:\u003C/p>\\n\u003Cul>\\n\u003Cli>the Identity Provider (IdP), e.g. Okta,\u003C/li>\\n\u003Cli>the Subject, i.e. the user's browser, and\u003C/li>\\n\u003Cli>the Service Provider (SP), e.g. Zuora, Rally, etc.\u003C/li>\\n\u003C/ul>\\n\u003Cp>The standard defines an XML schema for \u003Cem>assertions\u003C/em> from one party to another.\\nAn assertion is made up of some metadata (e.g. who is the subject)\\nand a series of \u003Cem>statements\u003C/em>, which take on one of three forms:\u003C/p>\\n\u003Cul>\\n\u003Cli>Authentication (how and when did the subject authenticate)\u003C/li>\\n\u003Cli>Attribute (key-value pairs representing properties of the subject, such as email address, group membership, etc)\u003C/li>\\n\u003Cli>Authorization Decision (\u003Cspan class=\\\"math math-inline\\\">\u003Cspan class=\\\"katex\\\">\u003Cspan class=\\\"katex-mathml\\\">\u003Cmath xmlns=\\\"http://www.w3.org/1998/Math/MathML\\\">\u003Csemantics>\u003Cmrow>\u003Cmi>X\u003C/mi>\u003C/mrow>\u003Cannotation encoding=\\\"application/x-tex\\\">X\u003C/annotation>\u003C/semantics>\u003C/math>\u003C/span>\u003Cspan class=\\\"katex-html\\\" aria-hidden=\\\"true\\\">\u003Cspan class=\\\"base\\\">\u003Cspan class=\\\"strut\\\" style=\\\"height:0.6833em;\\\">\u003C/span>\u003Cspan class=\\\"mord mathnormal\\\" style=\\\"margin-right:0.07847em;\\\">X\u003C/span>\u003C/span>\u003C/span>\u003C/span>\u003C/span> is authorized to do \u003Cspan class=\\\"math math-inline\\\">\u003Cspan class=\\\"katex\\\">\u003Cspan class=\\\"katex-mathml\\\">\u003Cmath xmlns=\\\"http://www.w3.org/1998/Math/MathML\\\">\u003Csemantics>\u003Cmrow>\u003Cmi>Y\u003C/mi>\u003C/mrow>\u003Cannotation encoding=\\\"application/x-tex\\\">Y\u003C/annotation>\u003C/semantics>\u003C/math>\u003C/span>\u003Cspan class=\\\"katex-html\\\" aria-hidden=\\\"true\\\">\u003Cspan class=\\\"base\\\">\u003Cspan class=\\\"strut\\\" style=\\\"height:0.6833em;\\\">\u003C/span>\u003Cspan class=\\\"mord mathnormal\\\" style=\\\"margin-right:0.22222em;\\\">Y\u003C/span>\u003C/span>\u003C/span>\u003C/span>\u003C/span> on \u003Cspan class=\\\"math math-inline\\\">\u003Cspan class=\\\"katex\\\">\u003Cspan class=\\\"katex-mathml\\\">\u003Cmath xmlns=\\\"http://www.w3.org/1998/Math/MathML\\\">\u003Csemantics>\u003Cmrow>\u003Cmi>Z\u003C/mi>\u003C/mrow>\u003Cannotation encoding=\\\"application/x-tex\\\">Z\u003C/annotation>\u003C/semantics>\u003C/math>\u003C/span>\u003Cspan class=\\\"katex-html\\\" aria-hidden=\\\"true\\\">\u003Cspan class=\\\"base\\\">\u003Cspan class=\\\"strut\\\" style=\\\"height:0.6833em;\\\">\u003C/span>\u003Cspan class=\\\"mord mathnormal\\\" style=\\\"margin-right:0.07153em;\\\">Z\u003C/span>\u003C/span>\u003C/span>\u003C/span>\u003C/span>)\u003C/li>\\n\u003C/ul>\\n\u003Cp>Additionally, the standard defines a format for metadata that describe configuration information for a service\\nA service's metadata often includes information about the role of the service, the public key for verifying the assertion, and more.\u003C/p>\\n\u003Ch2>The SSO Flow\u003C/h2>\\n\u003Cp>These notes will focus on the redirect based flow, where the browser brokers the authentication.\\nOf such flows, there are two types, depending on whether the SP or the IdP initiates the flow.\u003C/p>\\n\u003Ch3>SP-Initiated\u003C/h3>\\n\u003Col>\\n\u003Cli>Subject requests a resource from the SP.\u003C/li>\\n\u003Cli>SP checks if browser has as security context:\\nIf yes, skip to 7.\\nElse, redirect with a \u003Ccode>GET\u003C/code> to IdP with two query parameters:\\n\u003Cul>\\n\u003Cli>\u003Ccode>SamlRequest\u003C/code>: Base64 encoded XML\u003C/li>\\n\u003Cli>\u003Ccode>RelayState\u003C/code>: any state that needs to be kept track of, e.g. deep links\u003C/li>\\n\u003C/ul>\\n\u003C/li>\\n\u003Cli>IdP checks if browser has a security context.\\nIf not, prompt user for credentials.\u003C/li>\\n\u003Cli>IdP generates a SAML assertion and puts it in an xhtml document as a hidden form.\\nSign the assertion with private key and redirect with a \u003Ccode>POST\u003C/code> to SP.\\nEcho the \u003Ccode>RelayState\u003C/code> back to the SP.\u003C/li>\\n\u003Cli>SP verifies the authenticity of the assertion with IdP's public key.\\nIf valid, SP generates a security context and forwards it to the subject.\u003C/li>\\n\u003Cli>Subject requests the resource again.\u003C/li>\\n\u003Cli>SP checks security context to see if user is authorized to access resource.\\nIf yes, responds with the resource.\u003C/li>\\n\u003C/ol>\\n\u003Cp>It is important to note that this process is stateless, hence the \u003Ccode>RelayState\u003C/code> query parameter must be used to keep track of information we want to persist.\u003C/p>\\n\u003Ch3>IdP-Initiated\u003C/h3>\\n\u003Col>\\n\u003Cli>IdP prompts users for credentials.\u003C/li>\\n\u003Cli>User selects service from IdP portal.\u003C/li>\\n\u003Cli>IdP generates a SAML assertion and puts it in an xhtml document as a hidden form.\\nSign the assertion with private key and redirect with a \u003Ccode>POST\u003C/code> to SP.\u003C/li>\\n\u003Cli>SP verifies the authenticity of the assertion with IdP's public key.\\nIf valid, SP generates a security context and forwards it to the subject.\u003C/li>\\n\u003Cli>SP checks security context to see if user is authorized to access resource.\\nIf yes, responds with the resource.\u003C/li>\\n\u003C/ol>\\n\u003Ch2>What is SCIM?\u003C/h2>\\n\u003Cp>The System for Cross-domain Identity Management (SCIM) is an open standard for provisioning users and groups across applications.\u003C/p>\\n\u003Cp>For example, suppose that we want to provide access to an application for all members of a particular AD group and automatically assign each user to different permission groups based on their position in the company.\\nNow, say that someone has left the team and we want to revoke access to their account.\u003C/p>\\n\u003Cp>All these identity management tasks are effortless in services that support the SCIM standard.\u003C/p>\\n\u003Ch2>The Standard\u003C/h2>\\n\u003Cp>The SCIM standard defines two things:\u003C/p>\\n\u003Cul>\\n\u003Cli>a JSON schema for representing users and groups, and\u003C/li>\\n\u003Cli>a RESTful API to perform CRUD (Create, Read, Update, and Delete) operations on users and groups.\u003C/li>\\n\u003C/ul>\\n\u003Ch2>Example User Lifecycle\u003C/h2>\\n\u003Cp>Suppose that John joins your company as a software engineer in the sales department.\\nYour company uses Microsoft Active Directory (AD) as a centralized user store integrated with Okta, which you use for identity management.\u003C/p>\\n\u003Cp>An example flow for how Okta may provision John's user in your favorite SaaS might be (disclaimer: I don't actually know exactly what Okta does, but this is my best guess from reading the docs):\u003C/p>\\n\u003Col>\\n\u003Cli>John's account is created in AD and assigned to the \u003Ccode>Sales\u003C/code> and \u003Ccode>Developer\u003C/code> AD groups.\u003C/li>\\n\u003Cli>John's account information is synced to Okta, which uses the \u003Ccode>Sales\u003C/code> group to assign him to \u003Ccode>SaaS.com\u003C/code> and pushes the \u003Ccode>Developer\u003C/code> group to the application.\u003C/li>\\n\u003Cli>Okta notices that John's account does not exist on \u003Ccode>SaaS.com\u003C/code>, so it issues the following \u003Ccode>POST\u003C/code> request to \u003Ccode>https://SaaS.com/scim/v2/Users\u003C/code>:\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-json\\\">\u003Ccode class=\\\"language-json\\\">\u003Cspan class=\\\"token punctuation\\\">{\u003C/span>\\n    \u003Cspan class=\\\"token property\\\">\\\"schemas\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span>\u003Cspan class=\\\"token string\\\">\\\"urn:ietf:params:scim:schemas:core:2.0:User\\\"\u003C/span>\u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n    \u003Cspan class=\\\"token property\\\">\\\"userName\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token string\\\">\\\"DoeJohn@company.com\\\"\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n    \u003Cspan class=\\\"token property\\\">\\\"name\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token punctuation\\\">{\u003C/span>\\n        \u003Cspan class=\\\"token property\\\">\\\"givenName\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token string\\\">\\\"John\\\"\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n        \u003Cspan class=\\\"token property\\\">\\\"familyName\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token string\\\">\\\"Doe\\\"\u003C/span>\\n    \u003Cspan class=\\\"token punctuation\\\">}\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n    \u003Cspan class=\\\"token property\\\">\\\"emails\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span>\u003Cspan class=\\\"token punctuation\\\">{\u003C/span>\\n        \u003Cspan class=\\\"token property\\\">\\\"primary\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token boolean\\\">true\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n        \u003Cspan class=\\\"token property\\\">\\\"value\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token string\\\">\\\"DoeJohn@company.com\\\"\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n        \u003Cspan class=\\\"token property\\\">\\\"type\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token string\\\">\\\"work\\\"\u003C/span>\\n    \u003Cspan class=\\\"token punctuation\\\">}\u003C/span>\u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n    \u003Cspan class=\\\"token property\\\">\\\"displayName\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token string\\\">\\\"John Doe\\\"\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n    \u003Cspan class=\\\"token property\\\">\\\"locale\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token string\\\">\\\"en-US\\\"\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n    \u003Cspan class=\\\"token property\\\">\\\"externalId\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token string\\\">\\\"randomid123\\\"\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n    \u003Cspan class=\\\"token property\\\">\\\"groups\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span>\u003Cspan class=\\\"token string\\\">\\\"Developer\\\"\u003C/span>\u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n    \u003Cspan class=\\\"token property\\\">\\\"password\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token string\\\">\\\"password123\\\"\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n    \u003Cspan class=\\\"token property\\\">\\\"active\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token boolean\\\">true\u003C/span>\\n\u003Cspan class=\\\"token punctuation\\\">}\u003C/span>\\n\u003C/code>\u003C/pre>\u003C/div>\\nto which \u003Ccode>SaaS.com\u003C/code> responds with a \u003Ccode>201 Created\u003C/code> and the newly created user.\u003C/li>\\n\u003Cli>John gets promoted to a manager and gets added to the \u003Ccode>Manager\u003C/code> AD group.\u003C/li>\\n\u003Cli>Okta updates his user by sending a \u003Ccode>PATCH\u003C/code> request to \u003Ccode>https://SaaS.com/scim/v2/Users/$theusersuuid\u003C/code>:\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-json\\\">\u003Ccode class=\\\"language-json\\\">\u003Cspan class=\\\"token punctuation\\\">{\u003C/span>\\n    \u003Cspan class=\\\"token property\\\">\\\"schemas\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span>\u003Cspan class=\\\"token string\\\">\\\"urn:ietf:params:scim:api:messages:2.0:PatchOp\\\"\u003C/span>\u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n    \u003Cspan class=\\\"token property\\\">\\\"Operations\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span>\u003Cspan class=\\\"token punctuation\\\">{\u003C/span>\\n        \u003Cspan class=\\\"token property\\\">\\\"op\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token string\\\">\\\"replace\\\"\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n        \u003Cspan class=\\\"token property\\\">\\\"value\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token punctuation\\\">{\u003C/span>\\n            \u003Cspan class=\\\"token property\\\">\\\"groups\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span>\u003Cspan class=\\\"token string\\\">\\\"Manager\\\"\u003C/span>\u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\\n        \u003Cspan class=\\\"token punctuation\\\">}\u003C/span>\\n    \u003Cspan class=\\\"token punctuation\\\">}\u003C/span>\u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\\n\u003Cspan class=\\\"token punctuation\\\">}\u003C/span>\\n\u003C/code>\u003C/pre>\u003C/div>\\nto which \u003Ccode>SaaS.com\u003C/code> responds with a \u003Ccode>200 OK\u003C/code> and the updated user.\u003C/li>\\n\u003Cli>John now leaves the company.\u003C/li>\\n\u003Cli>Okta deactivates his account and sends a \u003Ccode>PATCH\u003C/code> request to \u003Ccode>https://SaaS.com/scim/v2/Users/$theusersuuid\u003C/code> (note that Okta doesn't use the \u003Ccode>DELETE\u003C/code> verb):\\n\u003Cdiv class=\\\"remark-highlight\\\">\u003Cpre class=\\\"language-json\\\">\u003Ccode class=\\\"language-json\\\">\u003Cspan class=\\\"token punctuation\\\">{\u003C/span>\\n    \u003Cspan class=\\\"token property\\\">\\\"schemas\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span>\u003Cspan class=\\\"token string\\\">\\\"urn:ietf:params:scim:api:messages:2.0:PatchOp\\\"\u003C/span>\u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n    \u003Cspan class=\\\"token property\\\">\\\"Operations\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token punctuation\\\">[\u003C/span>\u003Cspan class=\\\"token punctuation\\\">{\u003C/span>\\n        \u003Cspan class=\\\"token property\\\">\\\"op\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token string\\\">\\\"replace\\\"\u003C/span>\u003Cspan class=\\\"token punctuation\\\">,\u003C/span>\\n        \u003Cspan class=\\\"token property\\\">\\\"value\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token punctuation\\\">{\u003C/span>\\n            \u003Cspan class=\\\"token property\\\">\\\"active\\\"\u003C/span>\u003Cspan class=\\\"token operator\\\">:\u003C/span> \u003Cspan class=\\\"token boolean\\\">false\u003C/span>\\n        \u003Cspan class=\\\"token punctuation\\\">}\u003C/span>\\n    \u003Cspan class=\\\"token punctuation\\\">}\u003C/span>\u003Cspan class=\\\"token punctuation\\\">]\u003C/span>\\n\u003Cspan class=\\\"token punctuation\\\">}\u003C/span>\\n\u003C/code>\u003C/pre>\u003C/div>\\n\u003C/li>\\n\u003C/ol>\\n\u003Ch2>Sources\u003C/h2>\\n\u003Ch3>SAML\u003C/h3>\\n\u003Cul>\\n\u003Cli>\u003Ca href=\\\"https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0-cd-02.html\\\">https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0-cd-02.html\u003C/a>\u003C/li>\\n\u003Cli>\u003Ca href=\\\"https://developer.okta.com/docs/concepts/saml/\\\">https://developer.okta.com/docs/concepts/saml/\u003C/a>\u003C/li>\\n\u003Cli>\u003Ca href=\\\"https://www.samltool.com/generic_sso_res.php\\\">https://www.samltool.com/generic_sso_res.php\u003C/a>\u003C/li>\\n\u003C/ul>\\n\u003Ch3>SCIM\u003C/h3>\\n\u003Cul>\\n\u003Cli>\u003Ca href=\\\"https://scim.cloud/\\\">https://scim.cloud/\u003C/a>\u003C/li>\\n\u003Cli>\u003Ca href=\\\"https://developer.okta.com/docs/concepts/scim/\\\">https://developer.okta.com/docs/concepts/scim/\u003C/a>\u003C/li>\\n\u003Cli>\u003Ca href=\\\"https://developer.okta.com/docs/reference/scim/scim-20/\\\">https://developer.okta.com/docs/reference/scim/scim-20/\u003C/a>\u003C/li>\\n\u003C/ul>\"}"}</script>
+			<script>
+				{
+					__sveltekit_dsjck4 = {
+						base: new URL("..", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("../_app/immutable/entry/start.5d14dd9c.js"),
+						import("../_app/immutable/entry/app.481b2146.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 4],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
