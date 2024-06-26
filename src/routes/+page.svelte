@@ -41,6 +41,11 @@
 		src="/panda.png"
 		alt="profile icon"
 	/>
+	<!--	<img-->
+	<!--		class="rounded-full hidden md:block lg:w-64 w-56"-->
+	<!--		src="/me.jpg"-->
+	<!--		alt="profile icon"-->
+	<!--	/>-->
 </div>
 <hr class="border-zinc-600 md:max-w-full" />
 <section class="my-8 flex-col space-y-4 md:text-base text-sm text-justify">
