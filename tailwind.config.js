@@ -32,14 +32,14 @@ export default {
 								paddingTop: theme('spacing.1'),
 								paddingBottom: theme('spacing.1')
 							},
-                            '.prose a': {
-                                color: theme('colors.blue.400'),
-                            },
-                            '.prose a:hover': {
-                                color: theme('colors.blue.200'),
-                            },
-                            'blockquote p:first-of-type::before': { content: 'none' },
-                            'blockquote p:first-of-type::after': { content: 'none' },
+							'.prose a': {
+								color: theme('colors.blue.400')
+							},
+							'.prose a:hover': {
+								color: theme('colors.blue.200')
+							},
+							'blockquote p:first-of-type::before': { content: 'none' },
+							'blockquote p:first-of-type::after': { content: 'none' }
 						}
 					}
 				};

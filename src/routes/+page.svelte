@@ -43,16 +43,18 @@
 	/>
 </div>
 <hr class="border-zinc-600 md:max-w-full" />
-<section class="my-8 flex-col space-y-4 md:text-base text-sm">
+<section class="my-8 flex-col space-y-4 md:text-base text-sm text-justify">
 	<p>
-        Hi!
-        I'm Ethan Zhang, a first-year math major at the University of Illinois Urbana-Champaign.
-        I'm interested in theoretical computer science and its applications to mathematics, with a particular emphasis on proof assistants, logic, and type theory.
-        On the applied side, I'm interested in Linux and the design of programming languages and other software tooling.
+		Hi! I'm Ethan Zhang, a second-year undergrad at the University of Illinois
+		Urbana-Champaign studying mathematics and computer science. My research
+		interests are primarily in in theoretical computer science and its
+		applications to mathematics, with a particular emphasis on proof assistants,
+		logic, and type theory. Outside of that, I enjoy fiddling around with Linux,
+		functional programming, coffee, and fountain pens.
 	</p>
 </section>
 <hr class="border-zinc-600" />
-<p class="font-mono mt-8 mb-8 text-zinc-500 md:text-base text-sm">
+<p class="font-mono mt-8 text-zinc-500 md:text-base text-sm">
 	Design based on{' '}
 	<MediaLink url={'https://www.cs.cmu.edu/~kpratt/'}>
 		Kevin Pratt's Website

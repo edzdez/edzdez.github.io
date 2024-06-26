@@ -28,7 +28,6 @@
 				<NavbarLink to="/" curr={path}>Home</NavbarLink>
 				<NavbarLink to="/blog" curr={path}>Blog</NavbarLink>
 				<NavbarLink to="/projects" curr={path}>Projects</NavbarLink>
-				<NavbarLink to="/dots" curr={path}>Dots</NavbarLink>
 			</ul>
 		</div>
 	</div>
