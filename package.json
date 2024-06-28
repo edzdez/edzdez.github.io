@@ -1,0 +1,24 @@
+{
+  "comments": {
+    "dependencies": {},
+    "devDependencies": {
+      "@tailwindcss/typography": "tailwind",
+      "autoprefixer": "tailwind",
+      "postcss": "tailwind",
+      "postcss-cli": "tailwind",
+      "postcss-purgecss": "tailwind",
+      "tailwindcss": "tailwind"
+    }
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.4.1",
+    "autoprefixer": "^10.3.1",
+    "postcss": "^8.3.6",
+    "postcss-cli": "^8.3.1",
+    "postcss-purgecss": "^2.0.3",
+    "tailwindcss": "^2.2.7"
+  },
+  "name": "edzdez.github.io",
+  "version": "0.1.0"
+}
