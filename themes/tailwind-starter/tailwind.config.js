@@ -10,6 +10,9 @@ module.exports = {
                         blockquote: {
                             backgroundColor: '#3c3836', borderRadius: '0.2rem 0.5rem 0.5rem 0.2rem',
                         },
+                        pre: {
+                            backgroundColor: '#3c3836'
+                        },
                         'a': {
                             textDecoration: 'none', '&:hover': {
                                 color: '#83a598', textDecoration: 'underline',
@@ -41,6 +44,7 @@ module.exports = {
                         '--tw-prose-invert-captions': '#a89984',
                         '--tw-prose-invert-code': '#ebdbb2',
                         '--tw-prose-invert-pre-code': '#ebdbb2',
+                        '--tw-prose-invert-pre-bg': '#3c3836',
                         '--tw-prose-invert-th-borders': '#3c3836',
                         '--tw-prose-invert-td-borders': '#3c3836',
                     }
