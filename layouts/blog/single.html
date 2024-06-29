@@ -1,5 +1,15 @@
 {{ define "main" }}
-<article class="prose prose-invert">
+<header class="mt-8">
+    <h1 class="text-4xl font-bold text-[#fbf1c7]"> {{ .Title }}</h1>
+    <span class="date text-[#a89984]">{{ .Date.Format "January 2, 2006" }}</span>
+
+    <section class="mt-2">
+        {{ .Params.description }}
+    </section>
+</header>
+<hr class="my-4 border-[#504945]"/>
+<article class="prose prose-invert mb-16">
     {{ .Content }}
 </article>
+
 {{ end }}

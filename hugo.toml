@@ -36,5 +36,5 @@ theme = 'tailwind'
     target = "$1"
 
 [markup]
-[markup.highlight]
-style = 'gruvbox'
+  [markup.highlight]
+    style = 'gruvbox'
