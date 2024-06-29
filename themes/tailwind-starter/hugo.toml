@@ -1,13 +1,6 @@
-baseURL = 'edzdez.github.io'
-languageCode = 'en-us'
-title = 'Ethan Zhang'
-author = 'Ethan Zhang'
-theme = 'tailwind-starter'
+baseURL = "https://example.org"
 
-[params]
-  home = '/'
-  blog = '/blog'
-  projects = '/projects'
+disableKinds = ["page", "section", "taxonomy", "term"]
 
 [module]
   [module.hugoVersion]
