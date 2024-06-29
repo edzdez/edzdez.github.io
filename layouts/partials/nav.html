@@ -1,4 +1,4 @@
-<nav class="flex justify-between gap-y-4 relative" role="navigation">
+<nav class="mt-4 flex align-center justify-between gap-y-4 relative" role="navigation">
     <a {{ if .IsHome }}
          class="md:inline font-bold text-xl md:mt-0 mt-8 md:text-left text-center md:invisible hidden"
        {{ else }}
@@ -12,23 +12,23 @@
         <a {{ if eq .Path .Site.Params.home }}
              class="inline-block decoration-blue decoration-2 underline-offset-4 text-center
                     before:block before:content-[attr(title)] before:font-bold before:h-0
-                    before:overflow-hidden before:invisible font-bold underline"
+                    before:overflow-hidden before:invisible underline font-bold"
            {{ else }}
              class="inline-block decoration-blue decoration-2 underline-offset-4 text-center
                     before:block before:content-[attr(title)] before:font-bold before:h-0
-                    before:overflow-hidden before:invisible hover:underline"
+                    before:overflow-hidden before:invisible hover:underline text-[#d5c4a1]"
            {{ end }}
            href="{{ .Site.Params.home }}">
             Home
         </a>
-        <a {{ if eq .Path .Site.Params.blog }}
+        <a {{ if or (eq .Path .Site.Params.blog) (eq .Params.isPost true) }}
            class="inline-block decoration-blue decoration-2 underline-offset-4 text-center
                     before:block before:content-[attr(title)] before:font-bold before:h-0
-                    before:overflow-hidden before:invisible font-bold underline"
+                    before:overflow-hidden before:invisible underline font-bold"
            {{ else }}
            class="inline-block decoration-blue decoration-2 underline-offset-4 text-center
                     before:block before:content-[attr(title)] before:font-bold before:h-0
-                    before:overflow-hidden before:invisible hover:underline"
+                    before:overflow-hidden before:invisible hover:underline text-[#d5c4a1]"
            {{ end }}
            href="{{ .Site.Params.blog }}">
             Blog
@@ -36,11 +36,11 @@
         <a {{ if eq .Path .Site.Params.projects }}
            class="inline-block decoration-blue decoration-2 underline-offset-4 text-center
                     before:block before:content-[attr(title)] before:font-bold before:h-0
-                    before:overflow-hidden before:invisible font-bold underline"
+                    before:overflow-hidden before:invisible underline font-bold"
            {{ else }}
            class="inline-block decoration-blue decoration-2 underline-offset-4 text-center
                     before:block before:content-[attr(title)] before:font-bold before:h-0
-                    before:overflow-hidden before:invisible hover:underline"
+                    before:overflow-hidden before:invisible hover:underline text-[#d5c4a1]"
            {{ end }}
            href="{{ .Site.Params.projects }}">
             Projects

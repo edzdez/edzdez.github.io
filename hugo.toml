@@ -34,3 +34,7 @@ theme = 'tailwind'
   [[build.cachebusters]]
     source = "assets/.*\\.(.*)$"
     target = "$1"
+
+[markup]
+[markup.highlight]
+style = 'gruvbox'
