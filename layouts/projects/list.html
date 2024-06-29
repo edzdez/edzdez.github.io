@@ -1,0 +1,19 @@
+{{ define "main" }}
+<header class="my-8">
+    <h1 class="text-[#fbf1c7] text-4xl font-bold"> {{ .Title }}</h1>
+</header>
+
+{{ range sort .Pages ".Params.id" "asc" }}
+<article class="container border-t-2 border-[#504945] px-4 py-2">
+    <header class="">
+        <h1 class="text-xl"><a class="text-[#458588] hover:text-[#83a598] hover:underline" href="https://github.com/edzdez/{{ .Params.title }}">{{
+            .Title }}</a></h1>
+    </header>
+
+    <section class="mt-2">
+        {{ .Content }}
+    </section>
+</article>
+{{ end }}
+<div class="border-t-2 border-[#504945]"/>
+{{ end }}
