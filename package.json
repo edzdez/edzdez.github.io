@@ -2,11 +2,11 @@
   "comments": {
     "dependencies": {},
     "devDependencies": {
-      "@tailwindcss/typography": "tailwind",
-      "autoprefixer": "tailwind",
-      "postcss": "tailwind",
-      "postcss-cli": "tailwind",
-      "tailwindcss": "tailwind"
+      "@tailwindcss/typography": "tailwind-starter",
+      "autoprefixer": "tailwind-starter",
+      "postcss": "tailwind-starter",
+      "postcss-cli": "tailwind-starter",
+      "tailwindcss": "tailwind-starter"
     }
   },
   "dependencies": {},
