@@ -1,7 +1,7 @@
 +++
 title = 'Thoughts on Sway'
 author = 'Ethan Zhang'
-description = 'Some thoughts on the Sway window manager'
+description = 'Some thoughts on the Sway window manager.'
 date = '2023-07-09'
 isPost = true
 draft = false

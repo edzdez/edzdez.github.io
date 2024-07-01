@@ -1,5 +1,6 @@
 +++
 title = 'Ethan Zhang'
+description = "Hi! I'm Ethan, a math student at the University of Illinois Urbana-Champaign."
 isPost = false
 draft = false
 +++

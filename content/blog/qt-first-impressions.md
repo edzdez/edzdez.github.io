@@ -1,7 +1,7 @@
 +++
-title = 'QT First Impressions'
+title = 'Qt First Impressions'
 author = 'Ethan Zhang'
-description = 'My first impressions of QT'
+description = 'My first impressions on using Qt for desktop app develoment.'
 date = '2023-07-23'
 isPost = true
 draft = false
@@ -39,14 +39,14 @@ I recently gave it a try by writing two small application with it:
 
 - __`QString`, `QList`, and all the other Qt-specific data structures:__ \
   While they provide more features and are in some ways better than the STL implementations (e.g. with implicit sharing / COW making and parenting to make handling memory easier),
-  it is rather annoying to have to constantly convert back and forth between them when using non-QT libraries.
-  This dynamic leads to it being more convenient to just use QT everything instead of dealing with conflicts between the QT way and the STL way.
+  it is rather annoying to have to constantly convert back and forth between them when using non-Qt libraries.
+  This dynamic leads to it being more convenient to just use Qt everything instead of dealing with conflicts between the Qt way and the STL way.
 - __The `QObject` parent/child relationship:__ \
   It appears that the convention in Qt is to construct `QObject`s on the free store using `new` and with a raw pointer to a parent object, which would then handle deallocation for you.
   While this dynamic is rather convenient, I'm not quite so sure if I like this approach to memory management over, say, RAII.
 
 ## Final thoughts
 
-Overall, I enjoyed working with QT; it was, if anything, quite ergonomic.
+Overall, I enjoyed working with Qt; it was, if anything, quite ergonomic.
 Even with no prior experience, I was able to get up and running pretty quickly and only spent a few hours on each app.
-So, if I ever find myself in a position where I need to write a GUI app in C++, I'd definitely consider working with QT again.
+So, if I ever find myself in a position where I need to write a GUI app in C++, I'd definitely consider working with Qt again.

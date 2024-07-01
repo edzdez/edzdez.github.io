@@ -1,7 +1,7 @@
 +++
 title = 'Notes on SAML and SCIM'
 author = 'Ethan Zhang'
-description = 'Some notes on SAML2 and SCIM that I prepared for my manager during my internship at John Deere'
+description = 'Some notes on SAML2 and SCIM that I prepared for my manager during my internship at John Deere.'
 date = '2024-06-11'
 isPost = true
 draft = false

@@ -1,7 +1,7 @@
 +++
 title = 'Thinkpad Z16 Fan Control with Thinkfan'
 author = 'Ethan Zhang'
-description = 'Setting up fan control for my Thinkpad Z16'
+description = 'Setting up fan control for my Thinkpad Z16.'
 date = '2023-07-13'
 isPost = true
 draft = false

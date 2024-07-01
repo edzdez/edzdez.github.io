@@ -1,7 +1,7 @@
 +++
-title = 'A Quick Fix for File Dialogs in Chromium-based Browsers on Wayland'
+title = 'A Quick Fix for File Dialogs in Chromium-based Browsers on Wayland.'
 author = 'Ethan Zhang'
-description = 'It worked for me on Sway, and probably works on other WMs too'
+description = 'It worked for me on Sway, and probably works on other WMs too.'
 date = '2023-10-24'
 isPost = true
 draft = false
