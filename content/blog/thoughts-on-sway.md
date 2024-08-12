@@ -7,7 +7,7 @@ isPost = true
 draft = false
 +++
 
-![swaywm](/thoughts-on-sway-blogpost.png)
+![swaywm](/images/thoughts-on-sway-blogpost.png)
 
 I got my first taste of tiling window managers back in the summer of 2021, when I installed `sway` on my laptop.
 

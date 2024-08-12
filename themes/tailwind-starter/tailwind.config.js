@@ -8,7 +8,9 @@ module.exports = {
                     css: {
                         maxWidth: '100%',
                         blockquote: {
-                            backgroundColor: '#3c3836', borderRadius: '0.2rem 0.5rem 0.5rem 0.2rem',
+                            // backgroundColor: '#3c3836',
+                            borderRadius: '0.2rem',
+                            fontWeight: 'normal', fontStyle: 'normal'
                         },
                         pre: {
                             backgroundColor: '#3c3836'
@@ -25,6 +27,7 @@ module.exports = {
                             border: '1px solid #3c3836', padding: '0.5rem',
                         },
                         code: {
+                            backgroundColor: '#3c3836',
                             padding: '0.2rem',
                             borderRadius: '0.2rem',
                         },
