@@ -1,6 +1,6 @@
 <nav
-  class="mt-4 flex align-center justify-between gap-y-4 relative"
-  role="navigation"
+    class="mt-4 flex align-center justify-between gap-y-4 relative"
+    role="navigation"
 >
   <a {{ if .IsHome }}
        class="md:inline font-bold text-xl md:mt-0 mt-8 md:text-left text-center md:invisible hidden"
@@ -34,6 +34,10 @@
        {{ end }}
       href="{{ .Site.Params.projects }}">
       Projects
+    </a>
+    <a class="inline-block decoration-blue decoration-2 underline-offset-4 text-center before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible hover:underline text-[#d5c4a1]"
+       href="{{ .Site.Params.resume }}">
+      Resume
     </a>
   </div>
 </nav>

@@ -8,6 +8,7 @@ theme = 'tailwind-starter'
   home = '/'
   blog = '/blog'
   projects = '/projects'
+  resume = '/resume.pdf'
 
 [module]
   [module.hugoVersion]
