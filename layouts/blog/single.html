@@ -1,7 +1,9 @@
 {{ define "main" }}
 <header class="mt-8">
   <h1 class="text-4xl font-bold text-neutral-100">{{ .Title }}</h1>
-  <span class="date text-neutral-400">{{ .Date.Format "January 2, 2006" }}</span>
+  <span class="date text-neutral-400"
+    >{{ .Date.Format "January 2, 2006" }}</span
+  >
 
   <section class="mt-2">{{ .Params.description }}</section>
 </header>

@@ -9,7 +9,8 @@ module.exports = {
                         maxWidth: '100%',
                         blockquote: {
                             borderRadius: '0.2rem',
-                            fontWeight: 'normal', fontStyle: 'normal'
+                            fontWeight: 'normal', fontStyle: 'normal',
+                            color: 'D1D5DB',
                         },
                         // pre: {
                         //     backgroundColor: '#3c3836'
