@@ -1,51 +1,54 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="utf-8"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+    <link rel="manifest" href="/site.webmanifest"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>
-      {{ if .IsHome }} {{ .Title }} {{ else if eq .Params.isPost false }} {{
-      .Params.title }} :: {{ .Site.Title }} {{ else }} {{ .Params.title }} {{
-      end }}
+        {{ if .IsHome }} {{ .Title }} {{ else if eq .Params.isPost false }} {{
+        .Params.title }} :: {{ .Site.Title }} {{ else }} {{ .Params.title }} {{
+        end }}
     </title>
-    <meta name="description" content="{{ .Description }}" />
+    <meta name="description" content="{{ .Description }}"/>
     {{/* styles */}} {{ $options := dict "inlineImports" true }} {{ $styles :=
     resources.Get "css/styles.css" }} {{ $styles = $styles | resources.PostCSS
     $options }} {{ if hugo.IsProduction }} {{ $styles = $styles | minify |
     fingerprint | resources.PostProcess }} {{ end }}
-    <link href="{{ $styles.RelPermalink }}" rel="stylesheet" />
-    <link href="/css/syntax.css" rel="stylesheet" />
+    <link href="{{ $styles.RelPermalink }}" rel="stylesheet"/>
+    <!--    <link href="/css/syntax.css" rel="stylesheet" />-->
+    <link rel="stylesheet" href="https://lalten.github.io/lmweb/style/latinmodern-mono.css" type="text/css" />
+    <link href="/css/prism.css" rel="stylesheet"/>
     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css"
-      integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww"
-      crossorigin="anonymous"
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css"
+        integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww"
+        crossorigin="anonymous"
     />
 
     <!-- The loading of KaTeX is deferred to speed up page rendering -->
     <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"
-      integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd"
-      crossorigin="anonymous"
+        defer
+        src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"
+        integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd"
+        crossorigin="anonymous"
     ></script>
 
     <!-- To automatically render math in text elements, include the auto-render extension: -->
     <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
-      integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk"
-      crossorigin="anonymous"
-      onload="renderMathInElement( document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '\\[', right: '\\]', display: true}, {left: '$', right: '$', display: false}, {left: '\\(', right: '\\)', display: false} ] });"
+        defer
+        src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
+        integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk"
+        crossorigin="anonymous"
+        onload="renderMathInElement( document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '\\[', right: '\\]', display: true}, {left: '$', right: '$', display: false}, {left: '\\(', right: '\\)', display: false} ] });"
     ></script>
-  </head>
-  <body class="bg-[#282828] text-[#ebdbb2]">
-    <div class="container px-4 lg:max-w-4xl max-w-xl lg:w-5/4 w-full mx-auto mb-16">
-      {{ partial "nav" . }} {{ block "main" . }}{{ end }}
-    </div>
-  </body>
+</head>
+<body class="bg-neutral-800 text-neutral-100 font-['Latin Modern Roman']">
+<div class="container px-4 lg:max-w-4xl max-w-xl lg:w-5/4 w-full mx-auto mb-16">
+    {{ partial "nav" . }} {{ block "main" . }}{{ end }}
+</div>
+<script src="/js/prism.js"></script>
+</body>
 </html>

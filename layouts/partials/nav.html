@@ -14,7 +14,7 @@
     <a {{ if eq .Path .Site.Params.home }}
          class="inline-block decoration-blue decoration-2 underline-offset-4 text-center before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible underline font-bold"
        {{ else }}
-         class="inline-block decoration-blue decoration-2 underline-offset-4 text-center before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible hover:underline text-[#d5c4a1]"
+         class="inline-block decoration-blue decoration-2 underline-offset-4 text-center before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible hover:underline"
        {{ end }}
       href="{{ .Site.Params.home }}">
       Home
@@ -22,7 +22,7 @@
     <a {{ if or (eq .Path .Site.Params.blog) (eq .Params.isPost true) }}
          class="inline-block decoration-blue decoration-2 underline-offset-4 text-center before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible underline font-bold"
        {{ else }}
-         class="inline-block decoration-blue decoration-2 underline-offset-4 text-center before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible hover:underline text-[#d5c4a1]"
+         class="inline-block decoration-blue decoration-2 underline-offset-4 text-center before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible hover:underline"
        {{ end }}
       href="{{ .Site.Params.blog }}">
       Blog
@@ -30,12 +30,12 @@
     <a {{ if eq .Path .Site.Params.projects }}
          class="inline-block decoration-blue decoration-2 underline-offset-4 text-center before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible underline font-bold"
        {{ else }}
-         class="inline-block decoration-blue decoration-2 underline-offset-4 text-center before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible hover:underline text-[#d5c4a1]"
+         class="inline-block decoration-blue decoration-2 underline-offset-4 text-center before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible hover:underline"
        {{ end }}
       href="{{ .Site.Params.projects }}">
       Projects
     </a>
-    <a class="inline-block decoration-blue decoration-2 underline-offset-4 text-center before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible hover:underline text-[#d5c4a1]"
+    <a class="inline-block decoration-blue decoration-2 underline-offset-4 text-center before:block before:content-[attr(title)] before:font-bold before:h-0 before:overflow-hidden before:invisible hover:underline"
        href="{{ .Site.Params.resume }}">
       Resume
     </a>

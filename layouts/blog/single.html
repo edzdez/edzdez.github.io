@@ -1,11 +1,11 @@
 {{ define "main" }}
 <header class="mt-8">
-  <h1 class="text-4xl font-bold text-[#fbf1c7]">{{ .Title }}</h1>
-  <span class="date text-[#a89984]">{{ .Date.Format "January 2, 2006" }}</span>
+  <h1 class="text-4xl font-bold text-neutral-100">{{ .Title }}</h1>
+  <span class="date text-neutral-400">{{ .Date.Format "January 2, 2006" }}</span>
 
   <section class="mt-2">{{ .Params.description }}</section>
 </header>
-<hr class="my-4 border-[#504945]" />
+<hr class="my-4 border-neutral-600" />
 <article class="prose prose-invert">{{ .Content }}</article>
 
 {{ end }}

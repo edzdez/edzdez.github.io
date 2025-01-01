@@ -40,3 +40,5 @@ theme = 'tailwind-starter'
   [markup.highlight]
     noClasses = false
     style = 'gruvbox'
+  [markup.goldmark.renderer]
+    unsafe = true
