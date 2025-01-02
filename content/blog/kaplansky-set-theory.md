@@ -491,7 +491,7 @@ For each natural $n$, note that we can have at most one set $K \in C$ with cardi
 Suppose not; that is, let $K, K'$ be distinct sets with the same cardinality.
 Then, there must be at least one element in $K$ that is not in $K'$, and vice versa, implying that neither $K \le K'$ nor $K' \le K$ --- a contradiction with the assumption that $C$ is a chain.
 
-Moreover, we have an injection $f : C \to \mathbb{Z}_{\ge 0}$ given by $K \mapsto \abs{K}$, implying that $C$ is countable.
+Moreover, we have an injection $f : C \to \mathbb{Z}_{\ge 0}$ given by $K \mapsto |K|$, implying that $C$ is countable.
 Thus, the union of all sets in $C$ is countable (recall that the countable union of countable sets is countable).
 But, since $C$ is cofinal, every singleton set $\set{a} \subset L$ must be $\le$ (included in) some set $K \in C$, so $A \subset \bigcup C$.
 This result, however, implies that $A$ is countable --- a contradiction.
@@ -545,7 +545,7 @@ The cases are as follows:
    Hence, we consider the order isomorphism $f : A' \to B'$ and extend it to $A$ and $B$ by mapping $\top_A \mapsto \top_B$ and $\bot_A \mapsto \bot_B$.
 3. $A$ has a top element but no bottom element:
    We use a similar trick as in the previous case.
-   For any $B$ of the same class, we take the order-isomorphism $f : A \setminus \set{\top_A} \to B \setminus \set{\top_B}$ and extend it with $\top_A \mapsto \top_B}$.
+   For any $B$ of the same class, we take the order-isomorphism $f : A \setminus \set{\top_A} \to B \setminus \set{\top_B}$ and extend it with $\top_A \mapsto \top_B$.
 4. $A$ has a bottom element but no top element:
    This case is analogous to the preceding case.
    {{< /proof >}}
