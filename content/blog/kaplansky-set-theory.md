@@ -1071,26 +1071,71 @@ Thus, we conclude that the number of injective functions from $E$ to $D$ is at l
 </li>
 <li>
 {{< exercise >}}
+Let $D$ be an infinite set with cardinal number $d$.
+Prove that $D$ has $2^d$ subsets of cardinal number $d$.
 {{< /exercise >}}
 {{< proof >}}
+Obviously, $o(P(D)) = 2^d$ is an upper bound.
+To exhibit $2^d$ subsets with cardinal number $d$, split $D$ into the union of disjoint subsets $D_1, D_2$, each of which has cardinal number $d$.
+Then, every subset $S \subset D$ has cardinal number $\le d$, so the cardinality of $D_1 \cup S \le d + d = d$.
+There are $2^d$ such subsets $S$; hence, $2^d$ is a also a lower bound.
+Thus, there are $2^d$ total subsets of $D$ with cardinal number $d$.
+{{< /proof >}}
+
+</li>
+<li>
+{{< exercise >}}
+Let $D$ be an infinite set with cardinal number $d$.
+Prove that the number of one-to-one maps of $D$ onto itself is $2^d$.
+{{< /exercise >}}
+{{< proof >}}
+The number of maps from $D$ to itself is $d^d = 2^d$ (Exercise 4).
+Hence, $2^d$ is an upper bound.
+To exhibit $2^d$ bijections between $D$ and itself, we once again split $D$ into the union of disjoint subsets $D_1, D_2$, each of which has cardinal number $d$.
+We then consider the Cartesian product of the set of all injections from $D_1$ to $D_2$ and the set of all injections from $D_2$ to $D_1$.
+Both factors have cardinal number $d^d = 2^d$ (Exercise 7(b) and Exercise 4).
+Hence, the cardinal number of the product is $2^d \times 2^d = 2^{d + d} = 2^d$.
+Observe, then, that we can construct an explicit bijection $f$ between $D_1$ and $D_2$, dependent on both members of the pair, via the process detailed in the alternative proof of Schroeder-Bernstein (Section 2.3, Exercise 3(b)).
+Finally, we extend this bijection $f$ to a bijection $g : D \to D$ given by
+\\[
+    g(x) = \begin{cases}
+        f(x) & \text{if }x \in D_1 \cr
+        f^{-1}(x) & \text{if }x \in D_2 \cr
+    \end{cases}.
+\\]
+Hence, we have constructed $2^d$ bijections, implying that $2^d$ is a lower bound as well.
+Thus, there are $2^d$ total bijections between $D$ and itself.
 {{< /proof >}}
 </li>
 <li>
 {{< exercise >}}
+Let $D$ be an infinite set with cardinal number $d$.
+Let $e$ be a cardinal number $\le d$.
+Prove that $d^e$ is the number of subsets of $D$ with cardinal number $e$ and also the number with cardinal number $\le e$.
 {{< /exercise >}}
 {{< proof >}}
+Let $E$ be an arbitrary set with cardinality $e$.
+Then, each subset $S \subset D$ with cardinality $e$ can be characterized by a bijection between $E$ and $S$, or alternatively, an injection from $E$ to $D$.
+From 7(b), recall that the number of such maps is $d^e$, so the number of subsets of $D$ with cardinality $e$ is $d^e$.
+
+As for counting the number of subsets with cardinality $\le e$, I'm stuck. :)
 {{< /proof >}}
+
 </li>
 <li>
 {{< exercise >}}
+Let $E$ and $D$ be sets with cardinal numbers $d$ and $e$.
+Assume that $e$ is infinite and that $e \ge d$.
+Prove that the number of functions from $E$ onto $D$ is $d^e$.
 {{< /exercise >}}
 {{< proof >}}
-{{< /proof >}}
-</li>
-<li>
-{{< exercise >}}
-{{< /exercise >}}
-{{< proof >}}
+The set of surjections from $E$ to $D$ is a subset of the set of functions from $E$ to $D$.
+Hence, $d^e$ is an upper bound.
+To exhibit $d^e$ surjections, it suffices to fix a canonical "sink" $d \in D$ and consider the set of all subsets of $E$ with cardinal number $d$.
+Then, for each of these subsets $S$, we pick a bijection $f$ between $S$ and $D$ and extend it by mapping all elements of $E \setminus S$ to the sink $d$.
+This induced map is evidently a surjection, and furthermore, it is easily verified that each choice of $S$ gives rise to a unique bijection.
+By the previous exercise, there are $d^e$ such subsets, so $d^e$ is also a lower bound.
+Thus, the number of surjections is indeed itself $d^e$.
 {{< /proof >}}
 </li>
 </ol>
