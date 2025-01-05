@@ -1077,7 +1077,7 @@ Prove that $D$ has $2^d$ subsets of cardinal number $d$.
 {{< proof >}}
 Obviously, $o(P(D)) = 2^d$ is an upper bound.
 To exhibit $2^d$ subsets with cardinal number $d$, split $D$ into the union of disjoint subsets $D_1, D_2$, each of which has cardinal number $d$.
-Then, every subset $S \subset D$ has cardinal number $\le d$, so the cardinality of $D_1 \cup S \le d + d = d$.
+Then, every subset $S \subset D_2$ has cardinal number $\le d$, so the cardinality of $D_1 \cup S \le d + d = d$.
 There are $2^d$ such subsets $S$; hence, $2^d$ is a also a lower bound.
 Thus, there are $2^d$ total subsets of $D$ with cardinal number $d$.
 {{< /proof >}}
