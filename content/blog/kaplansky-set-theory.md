@@ -932,12 +932,9 @@ If $d_1 > e$, then $d + d_1 = d_1 > e$.
    Prove that $\bigcup A_i$ has cardinal number $d$.
    {{< /exercise >}}
    {{< proof >}}
-   Denote $o(\bigcup A_i) = e$.
-
-   Note that if all the $A_i$'s are disjoint, then $e = o(A_1 \times A_2 \times \dots) = dd \cdots = d$.
-   Hence, $e \le d$.
-   Moreover, note that since $\bigcup A_i$ is a union of sets with cardinality $d$, $A_1 \subset \bigcup A_i$, so $d \le e$.
-   Hence, $e = d$.
+   Since $A_1 \subset \bigcup A$, it must be the case that $d = o(A_1) \le o(\bigcup A_i)$.
+   Moreover, $o(\bigcup A_i) \le o(\bigsqcup A_i) = \aleph_0 d = d$ (since $d \ge \aleph_0$).
+   Thus, $a = d$.
    {{< /proof >}}
 
 2. {{< exercise >}}
