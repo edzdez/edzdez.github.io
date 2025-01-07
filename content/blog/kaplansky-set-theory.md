@@ -932,7 +932,7 @@ If $d_1 > e$, then $d + d_1 = d_1 > e$.
    Prove that $\bigcup A_i$ has cardinal number $d$.
    {{< /exercise >}}
    {{< proof >}}
-   Since $A_1 \subset \bigcup A$, it must be the case that $d = o(A_1) \le o(\bigcup A_i)$.
+   Since $A_1 \subset \bigcup A_i$, it must be the case that $d = o(A_1) \le o(\bigcup A_i)$.
    Moreover, $o(\bigcup A_i) \le o(\bigsqcup A_i) = \aleph_0 d = d$ (since $d \ge \aleph_0$).
    Thus, $a = d$.
    {{< /proof >}}
