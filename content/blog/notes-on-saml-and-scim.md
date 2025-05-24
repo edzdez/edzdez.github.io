@@ -1,7 +1,7 @@
 +++
 title = 'Notes on SAML and SCIM'
 author = 'Ethan Zhang'
-description = 'Some notes on SAML2 and SCIM that I prepared for my manager during my internship at John Deere.'
+description = 'Some notes on SAML2 & SCIM, and in particular, how they can be used to provision users across services.'
 date = '2024-06-11'
 isPost = true
 draft = false
@@ -21,15 +21,15 @@ There are three participants in the SAML flow:
 - the Subject, i.e. the user's browser, and
 - the Service Provider (SP), e.g. Zuora, Rally, etc.
 
-The standard defines an XML schema for *assertions* from one party to another.
+The standard defines an XML schema for _assertions_ from one party to another.
 An assertion is made up of some metadata (e.g. who is the subject)
-and a series of *statements*, which take on one of three forms:
+and a series of _statements_, which take on one of three forms:
 
 - Authentication (how and when did the subject authenticate)
 - Attribute (key-value pairs representing properties of the subject, such as email address, group membership, etc.)
 - Authorization Decision ($X$ is authorized to do $Y$ on $Z$)
 
-Additionally, the standard defines a format for metadata that describe configuration information for a service's 
+Additionally, the standard defines a format for metadata that describe configuration information for a service's
 metadata often includes information about the role of the service, the public key for verifying the assertion, and more.
 
 ## The SSO Flow
@@ -43,8 +43,8 @@ Of such flows, there are two types, depending on whether the SP or the IdP initi
 2. SP checks if browser has as security context:
    If yes, skip to 7.
    Else, redirect with a `GET` to IdP with two query parameters:
-    - `SamlRequest`: Base64 encoded XML
-    - `RelayState`: any state that needs to be kept track of, e.g. deep links
+   - `SamlRequest`: Base64 encoded XML
+   - `RelayState`: any state that needs to be kept track of, e.g. deep links
 3. IdP checks if browser has a security context.
    If not, prompt user for credentials.
 4. IdP generates a SAML assertion and puts it in an xhtml document as a hidden form.
@@ -95,55 +95,61 @@ An example flow for how Okta may provision John's user in your favorite SaaS mig
 1. John's account is created in AD and assigned to the `Sales` and `Developer` AD groups.
 2. John's account information is synced to Okta, which uses the `Sales` group to assign him to `SaaS.com` and pushes the `Developer` group to the application.
 3. Okta notices that John's account does not exist on `SaaS.com`, so it issues the following `POST` request to `https://SaaS.com/scim/v2/Users`:
-    ```json
-    {
-        "schemas": ["urn:ietf:params:scim:schemas:core:2.0:User"],
-        "userName": "DoeJohn@company.com",
-        "name": {
-            "givenName": "John",
-            "familyName": "Doe"
-        },
-        "emails": [{
-            "primary": true,
-            "value": "DoeJohn@company.com",
-            "type": "work"
-        }],
-        "displayName": "John Doe",
-        "locale": "en-US",
-        "externalId": "randomid123",
-        "groups": ["Developer"],
-        "password": "password123",
-        "active": true
-    }
-    ```
-    to which `SaaS.com` responds with a `201 Created` and the newly created user.
+   ```json
+   {
+     "schemas": ["urn:ietf:params:scim:schemas:core:2.0:User"],
+     "userName": "DoeJohn@company.com",
+     "name": {
+       "givenName": "John",
+       "familyName": "Doe"
+     },
+     "emails": [
+       {
+         "primary": true,
+         "value": "DoeJohn@company.com",
+         "type": "work"
+       }
+     ],
+     "displayName": "John Doe",
+     "locale": "en-US",
+     "externalId": "randomid123",
+     "groups": ["Developer"],
+     "password": "password123",
+     "active": true
+   }
+   ```
+   to which `SaaS.com` responds with a `201 Created` and the newly created user.
 4. John gets promoted to a manager and gets added to the `Manager` AD group.
 5. Okta updates his user by sending a `PATCH` request to `https://SaaS.com/scim/v2/Users/$theusersuuid`:
-    ```json
-    {
-        "schemas": ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
-        "Operations": [{
-            "op": "replace",
-            "value": {
-                "groups": ["Manager"]
-            }
-        }]
-    }
-    ```
-    to which `SaaS.com` responds with a `200 OK` and the updated user.
+   ```json
+   {
+     "schemas": ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
+     "Operations": [
+       {
+         "op": "replace",
+         "value": {
+           "groups": ["Manager"]
+         }
+       }
+     ]
+   }
+   ```
+   to which `SaaS.com` responds with a `200 OK` and the updated user.
 6. John now leaves the company.
 7. Okta deactivates his account and sends a `PATCH` request to `https://SaaS.com/scim/v2/Users/$theusersuuid` (note that Okta doesn't use the `DELETE` verb):
-    ```json
-    {
-        "schemas": ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
-        "Operations": [{
-            "op": "replace",
-            "value": {
-                "active": false
-            }
-        }]
-    }
-    ```
+   ```json
+   {
+     "schemas": ["urn:ietf:params:scim:api:messages:2.0:PatchOp"],
+     "Operations": [
+       {
+         "op": "replace",
+         "value": {
+           "active": false
+         }
+       }
+     ]
+   }
+   ```
 
 ## Sources
 
