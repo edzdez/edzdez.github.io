@@ -1,6 +1,7 @@
 +++
 title = 'sway-easyfocus'
 id = 1
+href = 'https://github.com/edzdez/sway-easyfocus'
 +++
 
 A tool to help efficiently focus windows in Sway inspired by i3-easyfocus.

@@ -7,11 +7,15 @@
 <article class="container border-t-2 border-neutral-600 px-4 py-2">
   <header class="">
     <h1 class="text-xl">
+      {{ if .Params.href }}
       <a
         class="text-sky-500 hover:text-sky-300 hover:underline"
-        href="https://github.com/edzdez/{{ .Params.title }}"
-        >{{ .Title }}</a
+        href="{{ .Params.href }}"
+        >{{ .Params.title }}</a
       >
+      {{ else }}
+      <p>{{ .Params.title }}</p>
+      {{ end }}
     </h1>
   </header>
 
